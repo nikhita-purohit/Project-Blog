@@ -1,0 +1,164 @@
+---
+title: "UFO Sightings"
+author: "Nikhita Purohit"
+date: "2025-09-28"
+categories: [code]
+---
+
+![](images/clipboard-2272767986.png)
+
+# UFO Sightings
+
+## *1. Setting up R Packages*
+
+```{r}
+# SETUP CHUNK- LIBRARIES
+#| label: setup
+#| echo: false
+library(tidyverse)
+library(mosaic) # Our all-in-one package
+library(skimr) # Looking at data
+library(janitor) # Clean the data
+library(naniar) # Handle missing data
+library(visdat) # Visualise missing data
+library(tinytable) # Printing Static Tables for our data
+library(DT) # Interactive Tables for our data
+library(crosstable) # Multiple variable summaries
+```
+
+## 2. *Read Data*
+
+```{r}
+ufo_modified <- ufo <- readr::read_csv("../data/ufo_sightings.csv") %>% 
+  # Clean variable names
+  janitor::clean_names(case="snake")
+ufo_modified
+```
+
+## 3. *Examine Data*
+
+```{r}
+dplyr::glimpse(ufo_modified)
+```
+
+```{r}
+skimr::skim(ufo_modified)
+```
+
+## 4. *Data Dictionary*
+
+### *Quantitative Data*
+
+1.  encounter_length(dbl): Duration of encounter with UFO (seconds)
+2.  latitude(dbl): Latitude of UFO location
+3.  longitude(dbl): Longitude of UFO location
+
+### *Qualitative Data*
+
+1.  date_time(fct): Date and time when the UFO was spotted
+2.  city_area(fct): Where the UFO was spotted
+3.  state(fct): State code where the UFO was spotted
+4.  country(fct): Country in which the UFO was spotted
+5.  ufo_shape(fct): Shape of the UFO
+6.  described_encounter_length(fct): Duration of encounter with UFO (seconds, minutes and hours)
+7.  description(fct): Description and details regarding the encounter
+8.  date_documented(fct): The date when the sighting was officially recorded
+
+```{r}
+ufo_modified %>%
+  dplyr::summarise(across(
+    .cols = c(encounter_length,latitude,longitude), # select columns
+
+    .fns = list(
+      mean = ~ mean(., na.rm = T),
+      sd = sd,
+      min = min, max = max
+    )
+  ))
+```
+
+```{r}
+ufo_modified <- ufo %>% tidyr::drop_na()
+ufo_modified
+```
+
+```{r}
+ufo_modified <- ufo_modified %>%
+  dplyr::mutate(across(where(is.character), as.factor)) %>% 
+  relocate(where(is.factor))
+glimpse(ufo_modified)
+```
+
+```{r}
+ufo_modified2 <- ufo_modified %>%
+  stats::setNames(c("Date_and_Time_of_Sighting","City_Area","State_Code","Country","UFO_Shape","Described_Encounter_Length","Description","Date_of_Documentation","Encounter_Length","Latitude","Longitude"))
+
+ufo_modified2 %>%
+  dplyr::slice_sample(n = 500) %>%
+  DT::datatable(
+    style = "default",
+    caption = htmltools::tags$caption(
+      style = "caption-side: top; text-align: left; color: black; font-size: 100%;", "UFO Sightings Dataset (Clean)"
+    ),
+    options = list(pageLength = 10, autoWidth = TRUE)
+  ) %>%
+  DT::formatStyle(
+    columns = names(ufo_modified2),
+    fontFamily = "Roboto Condensed",
+    fontSize = "15px",
+  )
+```
+
+# 5. *Graphs*
+
+## 1. Which Countries Have Reported the Most UFO Sightings?
+
+```{r}
+ufo_modified2 %>%
+  gf_bar(~Country,
+    fill = "#ffbd59", position = "dodge") %>%
+  gf_labs(title = "Which Countries Have Reported the Most UFO Sightings?",
+          x = "Country",
+          y = "Number of Sightings") %>%
+  gf_refine(scale_fill_brewer(palette = "Set2"))
+```
+
+## 2. How Has The Length of UFO Encounters Evolved Over Time?
+
+```{r}
+gf_point(Encounter_Length ~ Date_of_Documentation, 
+         data = ufo_modified2, 
+         color = '#0097b2', 
+         size = 1) %>%
+  gf_labs(title = "How Has The Length of UFO Encounters Evolved Over Time?",
+          x = "Date Documented",
+          y = "Encounter Length (seconds,log scale)") %>% 
+  gf_refine(scale_y_log10())
+
+```
+
+## 3. Does UFO Encounter Duration Differ Across Countries?
+
+```{r}
+ufo_modified2 %>%
+  gf_boxplot(Encounter_Length ~ Country, fill = ~Country, orientation = "x",alpha = 0.5) %>%
+  gf_refine(scale_y_log10(), scale_fill_brewer(name = "Legend = Countries",palette = "Set1")) %>%
+  gf_labs(
+    title = "Does UFO Encounter Duration Differ Across Countries?",
+    x = "Country", y = "Encounter Duration"
+  )
+
+```
+
+## 4. What is The Most Frequently Sighted UFO Shape?
+
+```{r}
+ufo_modified2 %>%
+  gf_bar(~UFO_Shape, fill = ~Country, position = "dodge",) %>%
+  gf_refine(scale_y_log10(), scale_fill_brewer(name = "Legend = Countries",palette = "Set1")) %>% 
+  gf_labs(title = "What is The Most Frequently Sighted UFO Shape?",
+          x = "UFO Shape",
+          y = "Count") %>%
+  gf_theme(theme(axis.text.x = element_text(angle = 45, hjust = 1)))
+
+```

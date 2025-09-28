@@ -1,0 +1,208 @@
+---
+title: "Fertility"
+author: "Nikhita Purohit"
+date: "2025-09-28"
+categories: [code]
+---
+
+# ![](images/clipboard-3781854283.png)Fertility
+
+## *1. Setting up R Packages*
+
+```{r}
+# SETUP CHUNK- LIBRARIES
+#| label: setup
+#| echo: false
+library(tidyverse)
+library(mosaic) # Our all-in-one package
+library(skimr) # Looking at data
+library(janitor) # Clean the data
+library(naniar) # Handle missing data
+library(visdat) # Visualise missing data
+library(tinytable) # Printing Static Tables for our data
+library(DT) # Interactive Tables for our data
+library(crosstable) # Multiple variable summaries
+```
+
+## 2. *Read Data*
+
+```{r}
+fertility_modified <- fertility <- readr::read_csv("../data/Fertility.csv")%>%
+  # Clean variable names
+  janitor::clean_names(case="snake")
+fertility_modified
+```
+
+## 3. *Examine Data*
+
+```{r}
+dplyr::glimpse(fertility_modified)
+```
+
+```{r}
+skimr::skim(fertility_modified)
+```
+
+```{r}
+crosstable(work + age ~ hispanic + afam + other,
+           data = fertility_modified
+) %>%
+    crosstable::as_flextable()
+```
+
+## 4. *Data Dictionary*
+
+### *Quantitative Data*
+
+1.  rownames(dbl): Number of observations
+2.  age(dbl): Age of the mother (years)
+3.  work(dbl): Number of hours worked in a week
+
+### *Qualitative Data*
+
+1.  morekids(fct): Does the mother want more kids? (yes or no)
+2.  gender1(fct): Gender of the first born child
+3.  gender2(fct): Gender of the second born child
+4.  afam(fct): If the mother is African American (yes or no)
+5.  hispanic(fct): If the mother is Hispanic (yes or no)
+6.  other(fct): If the mother is neither African American nor Hispanic (yes or no)
+
+```{r}
+fertility_modified %>%
+  dplyr::count(morekids,gender1,gender2,afam,hispanic,other) %>%
+  tt()
+```
+
+```{r}
+fertility_modified %>%
+  dplyr::summarise(across(
+    .cols = c(age,work), # select columns
+
+    .fns = list(
+      mean = ~ mean(., na.rm = T),
+      sd = sd,
+      min = min, max = max
+    )
+  ))
+```
+
+```{r}
+fertility_modified <- fertility %>% tidyr::drop_na()
+fertility_modified
+```
+
+```{r}
+fertility_modified <- fertility %>%
+  dplyr::mutate(across(where(is.character), as.factor)) %>% 
+  # arrange the Qual variables first, Quant next
+  dplyr::relocate(where(is.factor), .after = rownames)
+
+glimpse(fertility_modified)
+```
+
+```{r}
+
+fertility_modified2 <- fertility_modified %>%
+  stats::setNames(c("Row ID","Want More Kids","Gender of First Born","Gender of Second Born","African American","Hispanic","Other","Age","Work"))
+
+fertility_modified2 %>%
+  dplyr::slice_sample(n = 500) %>%
+  DT::datatable(
+    style = "default",
+    caption = htmltools::tags$caption(
+      style = "caption-side: top; text-align: left; color: black; font-size: 100%;", "Fertility Dataset (Clean)"
+    ),
+    options = list(pageLength = 10, autoWidth = TRUE)
+  ) %>%
+  DT::formatStyle(
+    columns = names(fertility_modified2),
+    fontFamily = "Roboto Condensed",
+    fontSize = "12px",
+  )
+```
+
+# 5. *Graphs*
+
+## 1. Which Ethnic Groups are More Likely to Want More Children?
+
+```{r}
+fertility_modified  %>%
+  dplyr::slice_sample(n = 500) %>%
+  dplyr::count(morekids,afam,hispanic,other) %>%
+  tt()
+```
+
+```{r}
+fertility_chunk <- tibble::tribble(
+  ~morekids, ~afam, ~hispanic, ~other, ~n,
+  "no",  "no",  "no",  "no",  270,
+  "no",  "no",  "no",  "yes", 6,
+  "no",  "no",  "yes", "no", 12,
+  "no",  "no",  "yes", "yes", 7,
+  "no",  "yes", "no",  "no", 18,
+  "yes", "no",  "no",  "no", 155,
+  "yes", "no",  "no",  "yes", 4,
+  "yes", "no",  "yes", "no", 5,
+  "yes", "no",  "yes", "yes", 8,
+  "yes", "yes", "no", "no", 15
+)
+
+fertility_chunk_modified <- fertility_chunk %>%
+  filter((afam == "yes" & hispanic == "no" & other == "no") |
+         (afam == "no" & hispanic == "yes" & other == "no") |
+         (afam == "no" & hispanic == "no" & other == "yes"))
+
+fertility_chunk_plot <- fertility_chunk_modified %>%
+  mutate(ethnicity = case_when(
+    afam == "yes" ~ "afam",
+    hispanic == "yes" ~ "hispanic",
+    other == "yes" ~ "other"
+  )) %>%
+  group_by(ethnicity) %>%
+  summarise(count = sum(n))
+
+gf_col(count ~ ethnicity, data = fertility_chunk_plot, fill = ~ ethnicity) %>%
+  gf_labs(title = "Which Ethnic Groups are More Likely to Want More Children?",
+          x = "Ethnicity",
+          y = "Number of Mothers")%>%
+  gf_refine(scale_fill_brewer(name = "Legend = Ethnic Group",palette = "Pastel1"))
+
+```
+
+## 2. Does a Mother’s Age Relate to How Many Hours She Works, and Does Wanting More Children Make a Difference?
+
+```{r}
+fertility_modified3 <- fertility_modified %>%
+  group_by(age, morekids) %>%
+  summarize(avg_work = mean(work, na.rm = TRUE))
+
+gf_col(avg_work ~ age, fill = ~morekids, data = fertility_modified3, position = "dodge") %>%
+  gf_labs(title = "Average Work Hours vs Age by Desire for More Kids",
+          x = "Age of Mother",
+          y = "Average Hours Worked per Week") %>%
+  gf_refine(scale_fill_brewer(name = "Legend = Want More Kids", palette = "Paired"))
+```
+
+## 3. Are Mothers Who Want More Kids Generally Younger or Older Than Those Who Don’t?
+
+```{r}
+fertility_chunk_modified2 <- fertility_modified %>%
+  gf_boxplot(age ~ morekids,fill = ~morekids) %>%
+  gf_refine(scale_fill_brewer(name = "Legend = Desire For More Kids", palette = "PiYG")) %>%
+  gf_labs(
+    title = "Are Mothers Who Want More Kids Generally Younger or Older Than Those Who Don’t?",
+    x = "Desire For More Kids", y = "Age of Mother"
+  )
+fertility_chunk_modified2
+```
+
+## 4. How Does The Distribution Of Weekly Work Hours Vary Based On The Gender Of The First-Born Child?
+
+```{r}
+gf_histogram(~ work, data = fertility_modified, binwidth = 5, fill = "#c885da") %>%
+  gf_facet_grid(~ gender1) %>%
+  gf_labs(title = "Work Hours Distribution by Gender of First Born",
+          x = "Hours Worked per Week",
+          y = "Count")
+
+```

@@ -1,0 +1,193 @@
+---
+title: "Horror Movies"
+author: "Nikhita Purohit"
+date: "2025-09-28"
+categories: [code]
+---
+
+![](images/clipboard-1720034198.png){width="690"}
+
+# Horror Movies
+
+## *1. Setting up R Packages*
+
+```{r}
+# SETUP CHUNK- LIBRARIES
+#| label: setup
+#| echo: false
+library(tidyverse)
+library(mosaic) # Our all-in-one package
+library(skimr) # Looking at data
+library(janitor) # Clean the data
+library(naniar) # Handle missing data
+library(visdat) # Visualise missing data
+library(tinytable) # Printing Static Tables for our data
+library(DT) # Interactive Tables for our data
+library(crosstable) # Multiple variable summaries
+```
+
+## 2. *Read Data*
+
+```{r}
+horrormovies_modified <- horrormovies <- readr::read_csv("../data/HorrorMoviedata.csv")%>%
+  # Clean variable names
+  janitor::clean_names(case="snake")
+horrormovies_modified
+```
+
+## 3. *Examine Data*
+
+```{r}
+dplyr::glimpse(horrormovies_modified)
+```
+
+```{r}
+skimr::skim(horrormovies_modified)
+```
+
+```{r}
+crosstable(ranking + hrv_difference_percent ~ this_film_is_a_sequel + this_film_has_at_least_one_sequel,
+  data = horrormovies_modified
+) %>%
+  crosstable::as_flextable()
+```
+
+```{r}
+crosstable(scare_score + rotten_tomato_score ~ this_film_is_a_sequel,
+  data = horrormovies_modified
+) %>%
+  crosstable::as_flextable()
+```
+
+# 4. *Data Dictionary*
+
+## *Quantitative Data*
+
+1.  ranking(dbl): Overall ranking of the movie
+2.  avg_resting_heart_rate_bpm(dbl): Average heart rate of audience while at rest (bpm)
+3.  avg_movie_heart_rate_bpm(dbl): Average heart rate of audience while watching the movie (bpm)
+4.  overall_difference_bpm(dbl): Difference between average movie heart rate and average resting heart rate (bpm)
+5.  hrv_difference_percent(dbl): Change in heart rate variability (hrv) from resting state to watching the movie (%)
+6.  highest_spike_bpm(dbl): The highest heart rate of the audience during the movie (bpm)
+7.  scare_score(dbl): How scary the movie was (out of 100)
+8.  rotten_tomato_score(dbl): Rotten tomato's score of the movie (out of 100)
+9.  year(dbl): The year the movie was released
+
+## *Qualitative Data*
+
+1.  movie(fct): Name of the movie
+2.  this_film_is_a_sequel(fct): Asks if the movie is a sequel (yes or no)
+3.  this_film_has_at_least_one_sequel(fct): Asks if the movie has a sequel (yes or no)
+
+```{r}
+horrormovies_modified %>%
+  dplyr::count(movie,this_film_is_a_sequel,this_film_has_at_least_one_sequel) %>%
+  tt()
+```
+
+```{r}
+horrormovies_modified %>%
+  dplyr::summarise(across(
+    .cols = c(avg_resting_heart_rate_bpm,avg_movie_heart_rate_bpm,overall_difference_bpm,hrv_difference_percent,highest_spike_bpm,scare_score,rotten_tomato_score), # select columns
+
+    .fns = list(
+      mean = ~ mean(., na.rm = T),
+      sd = sd,
+      min = min, max = max
+    )
+  ))
+```
+
+```{r}
+horrormovies_modified <- horrormovies %>% tidyr::drop_na()
+horrormovies_modified
+```
+
+```{r}
+horrormovies_modified <- horrormovies %>%
+  mutate(
+    movie = as.factor(movie),
+    this_film_is_a_sequel = as.factor(this_film_is_a_sequel),
+    this_film_has_at_least_one_sequel = as.factor(this_film_has_at_least_one_sequel)
+  ) %>%
+
+  # arrange the Qual variables first, Quant next
+  dplyr::relocate(where(is.factor), .after = ranking)
+
+glimpse(horrormovies_modified)
+```
+
+```{r}
+horrormovies_modified2 <- horrormovies_modified %>%
+  stats::setNames(c("Ranking","Movie","This Film is a Sequel","This Film Has at Least One Sequel","Average Resting Heart Rate (bpm)","Average Movie Heart Rate (bpm)","Overall Difference (bpm)","Heart Rate Variabilty (Difference %)","Highest Spike (bpm)","Scare Score","Rotten Tomato Score","Year of Release"))
+
+horrormovies_modified2 %>%
+  DT::datatable(
+    style = "default",
+    caption = htmltools::tags$caption(
+      style = "caption-side: top; text-align: left; color: black; font-size: 100%;", "Horror Movies Dataset (Clean)"
+    ),
+    options = list(pageLength = 10, autoWidth = TRUE)
+  ) %>%
+  DT::formatStyle(
+    columns = names(horrormovies_modified2),
+    fontFamily = "Roboto Condensed",
+    fontSize = "12px"
+  )
+```
+
+# 5. *Graphs*
+
+## 1. Do Sequels Trigger Different Audience Reactions Compared to Non-Sequels?
+
+```{r}
+horrormovies_long <- horrormovies_modified2 %>%
+  tidyr::pivot_longer(
+    cols = c(`Overall Difference (bpm)`, `Highest Spike (bpm)`, `Scare Score`, `Average Movie Heart Rate (bpm)`),
+    names_to = "measure",
+    values_to = "value"
+  )
+
+# Create the box plot with facets
+horrormovies_plot <- horrormovies_long %>%
+  gf_boxplot(value ~ `This Film is a Sequel`, fill = ~ `This Film is a Sequel`) %>%
+  gf_refine(scale_fill_brewer(name = "Legend = Is it a Sequel?", palette = "Accent")) %>%
+  gf_facet_wrap(~measure, scales = "free_y") %>%   # one box plot per numeric variable
+  gf_labs(
+    title = "Audience Reactions: Sequels vs Non-Sequels",
+    x = "Is This Film a Sequel?",
+    y = "Value of Measure"
+  )
+
+horrormovies_plot
+
+```
+
+## 2. "Do Movies That Critics Rate More Highly Also Tend To Be Scarier For Audiences?"
+
+```{r}
+
+gf_point(`Scare Score` ~ `Rotten Tomato Score`, data = horrormovies_modified2, color = 'maroon', size = 2) %>%
+  gf_labs(title = "Do Higher Critic Ratings Correlate With Scarier Movies?",
+          x = "Rotten Tomatoes Score",
+          y = "Audience Scare Score")
+
+```
+
+## 3. Do Newer Movies Differ From Older Ones In How Much They Raise BPM?
+
+```{r}
+
+horrormovies_plot2 <- horrormovies_modified %>%
+  gf_col(overall_difference_bpm ~ factor(year), fill = ~this_film_is_a_sequel, position = "dodge") %>%
+  gf_labs(title = "Do Newer Movies Differ From Older Ones In How Much They Raise BPM?",
+          x = "Movie Release Year",
+          y = "Average BPM Raised",
+          fill = "Legend = Is it a Sequel?") %>%
+  gf_theme(theme(axis.text.x = element_text(angle = 45, hjust = 1)))
+
+
+horrormovies_plot2
+
+
+```

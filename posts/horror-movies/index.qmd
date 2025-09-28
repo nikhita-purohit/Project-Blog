@@ -9,6 +9,14 @@ categories: [code]
 
 # Horror Movies
 
+Studying Top-Rated Horror Movies
+
+EXPERIMENT OBJECTIVE:
+
+The aim of this experiment could be to study how horror movies affect their audience in terms of heart rate, HRV, etc and compare them to ratings, reviews and movie characteristics.
+
+
+
 ## *1. Setting up R Packages*
 
 ```{r}
@@ -163,7 +171,7 @@ horrormovies_plot
 
 ```
 
-## 2. "Do Movies That Critics Rate More Highly Also Tend To Be Scarier For Audiences?"
+## 2. Do Movies That Critics Rate More Highly Also Tend To Be Scarier For Audiences?
 
 ```{r}
 
@@ -191,3 +199,33 @@ horrormovies_plot2
 
 
 ```
+
+
+
+# 6. *Summary of Findings*
+
+From the data and the graphs plotted, it is evident that
+
+1. Heart rates of the audience tend to be slightly higher for non-sequels compared to sequels.
+
+2. Both sequels and non-sequels can cause strong spikes.
+
+3. Non- sequels tend to be scarier than sequels.
+
+4. Newer movies tend to have sequels as compared to older movies.
+
+5. People who watch newer movies tend to have a higher average bpm than people who watch older movies.
+
+
+# 7. *Surprising Aspects*
+
+1. A movie's Rotten Tomato rating does not completely predict how scary the movie is, because there is a wide variation in the scare scores whether the movie was rated highly or poorly.
+
+2. Some movies that received almost perfect ratings are only moderately scary compared to movies that are considered mediocre. This suggests that the scare factor is subjective.
+
+3. Movies that are not sequels are scarier than movies that are.
+
+
+
+
+

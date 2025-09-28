@@ -5,7 +5,17 @@ date: "2025-09-28"
 categories: [code]
 ---
 
-# ![](images/clipboard-3781854283.png)Fertility
+![](images/clipboard-3781854283.png)
+
+# Fertility
+
+Studying Fertility Decisions
+
+EXPERIMENT OBJECTIVE:
+
+The aim of this experiment could be to understand the characteristics of women of different ethnicity, especially Hispanic and African American women, in order to study their fertility decisions. 
+
+
 
 ## *1. Setting up R Packages*
 
@@ -190,7 +200,7 @@ fertility_chunk_modified2 <- fertility_modified %>%
   gf_boxplot(age ~ morekids,fill = ~morekids) %>%
   gf_refine(scale_fill_brewer(name = "Legend = Desire For More Kids", palette = "PiYG")) %>%
   gf_labs(
-    title = "Are Mothers Who Want More Kids Generally Younger or Older Than Those Who Don’t?",
+    title = "Are Mothers Who Want More Kids Younger or Older?",
     x = "Desire For More Kids", y = "Age of Mother"
   )
 fertility_chunk_modified2
@@ -206,3 +216,37 @@ gf_histogram(~ work, data = fertility_modified, binwidth = 5, fill = "#c885da") 
           y = "Count")
 
 ```
+
+# 6. *Summary of Findings*
+
+From the data and the graphs plotted, it is evident that
+
+1. African American women are most likely to want more children, compared to women of other ethnicity.
+
+2. Younger mothers work for fewer hours than older women, perhaps because they have just started working, or they are prioritizing family.
+
+3. Women who work for longer hours in a week tend not to want more children.
+
+4. In the box plot, we see that the IQR for the 'no' plot has wider variation as compared to the 'yes', suggesting that women of a wide range of ages do not prefer having children.
+
+5. Most mothers either do not work at all, or work around 50 hours per week. 
+
+6. Whether the first born child is male or female, it does not seem to effect the working hours of the mother. 
+
+
+
+
+# 7. *Surprising Aspects*
+
+1. According to the U.S. Census and CDC fertility data, Hispanic families are usually bigger than African American families, both in terms of fertility rates and household size. So, I was surprised to see that African American mothers desire having more kids than Hispanic mothers.
+
+2. I was not expecting such a gradual rise for the 2nd chart. I thought that older women who work over 15 hours a week would prefer not having more children.
+
+3. There are very few young mothers, under the age of 24 who want more children. It is evident from the outliers in the box plot.
+
+4. Only few mothers are into part-time jobs. I assumed that most of the mothers would prefer part-time over full-time jobs.
+
+
+
+
+

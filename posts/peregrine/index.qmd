@@ -1,5 +1,5 @@
 ---
-title: "Peregrine"
+title: "Peregrine Falcons"
 author: "Nikhita Purohit, Ihina Purohit, Rishi Joseph"
 date: "2025-10-20"
 categories: [code]

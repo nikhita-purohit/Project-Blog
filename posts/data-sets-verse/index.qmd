@@ -1,0 +1,383 @@
+---
+title: "Homicide"
+author: "Nikhita Purohit, Ihina Purohit, Rishi Joseph"
+date: "2025-10-20"
+categories: [code]
+---
+
+![](images/clipboard-3344375375.png)
+
+# Homicide
+
+Studying Homicides in Nine US Cities (2015)
+
+EXPERIMENT OBJECTIVE : To analyze homicide patterns in nine U.S. cities in 2015, examining offense types, locations, and spatial distribution.
+
+## *1. Setting up R Packages*
+
+```{r}
+# SETUP CHUNK- LIBRARIES
+#| label: setup
+#| echo: false
+library(tidyverse)
+library(mosaic) # Our all-in-one package
+library(skimr) # Looking at data
+library(janitor) # Clean the data
+library(naniar) # Handle missing data
+library(visdat) # Visualize missing data
+library(tinytable) # Printing Static Tables for our data
+library(DT) # Interactive Tables for our data
+library(crosstable) # Multiple variable summaries
+library(crimedatasets)
+library(lubridate)
+```
+
+## 2. *Reading and Cleaning Data*
+
+```{r}
+data("homicides15_tbl_df", package = "crimedatasets")
+homicide_modified <- homicides15_tbl_df %>% 
+  janitor::clean_names(case="snake")
+homicide_modified
+```
+
+## 3. *Examining Data*
+
+```{r}
+dplyr::glimpse(homicide_modified)
+```
+
+```{r}
+names(homicide_modified)
+```
+
+```{r}
+skimr::skim(homicide_modified)
+```
+
+```{r}
+homicide_modified %>%
+  dplyr::count(city_name, offense_code, offense_type, address, location_type, location_category, fips_state, fips_county, tract) %>%
+  tt()
+```
+
+```{r}
+homicide_modified %>%
+  dplyr::summarise(across(
+    .cols = c(longitude, latitude), # select columns
+
+    .fns = list(
+      mean = ~ mean(., na.rm = T),
+      sd = sd,
+      min = min, max = max
+    )
+  )) %>% 
+  tt()
+```
+
+```{r}
+visdat::vis_dat(homicides15_tbl_df, sort_type = TRUE, palette = "default")
+```
+
+```{r}
+homicide_modified <- homicides15_tbl_df %>% tidyr::drop_na()
+homicide_modified
+```
+
+```{r}
+visdat::vis_dat(homicide_modified, sort_type = TRUE, palette = "default")
+```
+
+```{r}
+homicide_modified <- homicides15_tbl_df %>%
+  dplyr::mutate(across(where(is.character), as.factor)) %>% 
+  relocate(where(is.factor))
+glimpse(homicide_modified)
+```
+
+```{r}
+homicide_modified %>%
+  stats::setNames(c("City_Name", "Offense_Code", "Offense_Type", "Address", "Location_Type", "Location_Category", "Fips_County", "Tract", "UID", "Date_Single", "Longitude", "Latitude", "Fips_State", "Block_Group", "Block"))
+
+homicide_modified %>%
+  DT::datatable(
+    style = "default",
+    caption = htmltools::tags$caption(
+      style = "caption-side: top; text-align: left; color: black; font-size: 100%;", "Homicide Dataset (Clean)"
+    ),
+    options = list(pageLength = 10, autoWidth = TRUE)
+  ) %>%
+  DT::formatStyle(
+    columns = names(homicide_modified),
+    fontFamily = "Roboto Condensed",
+    fontSize = "12px",
+  )
+```
+
+
+```{r}
+crosstable(
+  latitude + longitude
+  ~ offense_type,        
+  data = homicide_modified       
+) %>%
+  as_flextable()
+```
+
+
+## *4. Data Dictionary*
+
+### *Quantitative Data*
+
+1.  uid(int): Unique identifier for each record or crime incident
+2.  longitude(dbl): Longitude coordinate of the crime location
+3.  latitude(dbl): Latitude coordinate of the crime location
+4.  fips_state(int): FIPS code for the state where the crime occurred.(A standardized numeric or alphanumeric code assigned by the U.S. government to uniquely identify geographic areas.)
+5.  block_group(int): Census block group number for the crime location
+6.  block(int): Census block number for the crime location
+
+### *Qualitative Data*
+
+1.  city_name(chr): Name of the city where the crime occurred
+2.  offense_code(chr): Numeric or alphanumeric code representing the type of offense
+3.  offense_type(chr): Text description of the offense (e.g., “Burglary”, “Assault”)
+4.  date_single(dttm): Date when the crime occurred
+5.  address(chr): Street address or location description of the crime
+6.  location_type(chr): Type of location where the crime occurred
+7.  location_category(chr): Broader category of the location
+8.  fips_county(chr): FIPS code for the county of the crime location
+9.  tract(chr): Census tract number for the crime location
+
+## 5. *Graphs*
+
+### 1. Where are crimes geographically concentrated?
+
+```{r}
+homicide_modified %>%
+gf_point(latitude ~ longitude, data = homicide_modified, color = 'orange', size = 2) %>%
+  gf_labs(title = "Where are crimes geographically concentrated?",
+          x = "Longitude",
+          y = "Latitude")
+```
+
+### Inferences
+
+The crime locations are pretty scattered. There is no visible pattern. It is evident from the graph that multiple crimes have occurred at the same coordinates. 
+
+### 2. How does offense type vary across block groups?
+
+```{r}
+homicide_modified %>% 
+  gf_bar(~offense_type | block_group, fill = ~block_group) %>% 
+  gf_labs(title = "How does offense type vary across block groups?",
+          x = "Offense type",
+          y = "Count",
+          fill = "Block Group") %>%
+  gf_theme(theme(axis.text.x = element_text(angle = 45, hjust = 1)))
+```
+
+### Inferences
+
+In each graph, the count of murder and non-negligent manslaughter is greater than that of negligent manslaughter. Out of all the blocks, block 1 has the greatest number of murders, and block 7 has the least amount of crime. Thus, we can conclude that block 7 is the safest place to live. 
+
+### 3. Do homicide rates differ based on the month?
+
+```{r}
+homicide_modified %>%
+  mutate(
+    month = month(date_single, label = TRUE, abbr = TRUE),
+    year = year(date_single)
+  ) %>%
+  group_by(year, month) %>%
+  dplyr::summarise(count = n(), .groups = "drop") %>%
+  gf_col(count ~ month | year, 
+         fill = ~month) %>%
+  gf_labs(
+    title = "Number of Homicides per Month",
+    x = "Month",
+    y = "Count",
+    fill = "Month"
+  )
+```
+
+### Inferences
+
+This graph suggests that homicides were more frequent in the second half of the year, peaking around August–September, and were lowest in February.
+Hypothesis: The dip in homicides in February could be because it has fewer days (28), so there’s less time for incidents to occur, which can lead to a lower count.
+
+
+### 4. What is the distribution of crime over time?
+
+```{r}
+homicide_modified %>% 
+gf_histogram(~ date_single,
+             data = homicide_modified,
+             bins = 43,            
+             fill = "navyblue",
+             color = "black") %>%
+  gf_labs(
+    title = "Distribution of Crime Over Time",
+    x = "Date of Crime",
+    y = "Number of Crimes"
+  ) 
+```
+
+### Inferences
+
+From this graph, we can infer that the number of crimes constantly varied with time. There is no visible pattern over the months.
+The homicide rate peaked around September, and dropped in January, and mid-February.
+
+
+### 5. Which offense type has the highest number of crimes?
+
+```{r}
+homicide_modified %>% 
+gf_bar(~offense_type, fill = ~offense_type, data = homicide_modified  , width = 0.2) %>%
+  gf_labs(
+    title = "Count of Crimes by Offense Type",
+    x = "Type of Crime",
+    y = "Count",
+    fill = "Offense Type"
+  ) %>%
+  gf_refine(scale_fill_brewer(palette = "Paired"))
+```
+
+### Inferences
+
+It is evident from the bar graph that there are only two types of offense- Murder and non-negligent manslaughter, and negligent manslaughter. Most of the crimes are of the offense type- Murder and non-negligent manslaughter.
+
+### 6. How do homicide cases vary across different locations?
+
+```{r}
+homicide_modified
+homicide_modified %>% 
+  gf_bar(~location_category, fill = "coral2") %>% 
+  gf_theme(theme(axis.text.x = element_text(angle = 25, hjust = 1))) %>% 
+gf_labs(
+    title = "Distribution of Homicides across location type",
+    x = "Location Category",
+    y = "Count"
+  )
+
+```
+
+### Inferences
+
+This graph tells us that most homicides occur on the street, residential areas and open spaces, similarly healthcare, commercial and hotel see the least.
+What is surprising is that most homicides occur in public spaces compared to more private controlled areas.
+
+### 7. How does the proportion of location categories vary across cities?
+
+```{r}
+homicide_modified <- homicides15_tbl_df %>% tidyr::drop_na()
+homicide_modified %>%
+    gf_props(~city_name,
+    fill = ~location_category,
+    position = "fill"
+  ) %>%
+   gf_labs(
+    title = "Distribution of homicide: proportion of location category across cities",
+    x = "City",
+    y = "Proportion"
+  )
+  gf_refine(scale_fill_brewer(palette = "Set1"))
+```
+
+### Inferences
+
+Most cities show high proportions of homicides happening in residential and street locations, with street locations being especially prominent.
+
+Fort Worth has a higher proportion of residential homicides compared to street homicides, and a larger proportion of leisure homicides than other cities. This could mean that violence in Fort Worth may be more closely tied to domestic or personal conflicts, as well as incidents in social or recreational spaces.
+
+Louisville, on the other hand, has a larger proportion of homicides occurring in open spaces compared to other cities, indicating more public or outdoor violence, one hypothesis is that this could be linked to gang activity or public confrontations. 
+Louisville has a smaller proportion of homicides in retail and healthcare settings, this is still more than those in other cities.
+
+### 8. Do homicides occur more during the day, or at night?
+
+```{r}
+homicide_modified <- homicides15_tbl_df %>% tidyr::drop_na()
+homicide_modified2 <- homicide_modified %>%
+  mutate(
+    hour = as.numeric(format(date_single, "%H")),
+    time_of_day = case_when(
+      hour >= 6 & hour < 18 ~ "Day",
+      TRUE ~ "Night"
+    )
+  )
+homicide_modified2
+
+homicide_modified2 %>%
+  gf_bar(~offense_type,
+    fill = ~time_of_day,
+    position = "dodge"
+  ) %>%
+  gf_facet_grid(~city_name) %>% 
+  gf_refine(scale_fill_brewer(palette = "Accent")) %>% 
+  gf_theme(theme(axis.text.x = element_text(angle = 35, hjust = 1))) %>% 
+  gf_labs(
+    title = "Do homicides occur more during the day, or at night?",
+    x = "Offense Type",
+    y = "Count",
+    fill = "Time"
+  )
+```
+
+### Inferences
+
+This graph suggests that night-time homicides are far more prevalent than those occurring during the day.
+Assumption: This could be due to higher alcohol and drug use during the night, fewer witnesses and darkness, which provides anonymity for criminals.
+Question: What does the wider bar graph for Fort Worth and Los Angeles (negligent manslaughter) indicate?
+
+### 9. When do most homicides occur?
+
+```{r}
+homicide_modified2 %>% 
+gf_histogram(~hour, fill = "darkmagenta",color = "black", bins = 24) %>% 
+  gf_labs(
+    title = "When do most homicides occur?",
+    x = "Hour",
+    y = "Count"
+  )
+
+```
+
+### Inferences
+
+This graph tells us that homicides peak at midnight and see a sudden dip in the following hour. Homicides occur the least in the mornings, around 5 - 9 am, as most people start their day around that time.
+
+## 6. *Summary of Inferences*
+
+The homicide data shows varying trends across locations and time. Homicide rates fluctuated throughout the year, peaking in September and dipping in February. Murder and non-negligent manslaughter were the most common offense types, with Block 1 having the highest crime rates and Block 7 the lowest, suggesting it’s the safest.
+
+Crime locations were dispersed, with street and residential areas being the most frequent. Homicides were more frequent at night compared to daytime.
+
+The prevalence of public space homicides over private areas was surprising.
+
+Questions:
+
+1. What factors might contribute to the February homicide dip beyond the shorter month?
+2. Why are open spaces associated with more homicides in Louisville?
+3. Could Fort Worth’s higher proportion of leisure homicides be connected to certain local, cultural or social dynamics?
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

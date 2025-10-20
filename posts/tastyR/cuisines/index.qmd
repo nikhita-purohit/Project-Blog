@@ -1,0 +1,334 @@
+---
+title: "Cuisines"
+author: "Nikhita Purohit, Ihina Purohit, Rishi Joseph"
+date: "2025-10-20"
+categories: [code]
+---
+
+![](images/clipboard-523654676.png)
+
+# Cuisines
+
+Studying Different Cuisines
+
+EXPERIMENT OBJECTIVE : To examine how nutritional content, preparation time, and user ratings vary across cuisines and countries of origin.
+
+## *1. Setting up R Packages*
+
+```{r}
+# SETUP CHUNK- LIBRARIES
+#| label: setup
+#| echo: false
+library(tidyverse)
+library(mosaic) # Our all-in-one package
+library(skimr) # Looking at data
+library(janitor) # Clean the data
+library(naniar) # Handle missing data
+library(visdat) # Visualize missing data
+library(tinytable) # Printing Static Tables for our data
+library(DT) # Interactive Tables for our data
+library(crosstable) # Multiple variable summaries
+library(tastyR)
+library(dplyr)
+library(ggformula)
+```
+
+## 2. *Reading and Cleaning Data*
+
+```{r}
+data("cuisines", package = "tastyR")
+cuisines_modified <- cuisines %>% 
+  janitor::clean_names(case="snake")
+cuisines_modified
+```
+
+## 3. *Examining Data*
+
+```{r}
+dplyr::glimpse(cuisines_modified)
+```
+
+```{r}
+skimr::skim(cuisines_modified)
+```
+
+```{r}
+names(cuisines_modified)
+```
+
+```{r}
+cuisines %>%
+  dplyr::summarise(across(
+    .cols = c(calories, fat, carbs, protein, avg_rating, total_ratings, reviews, prep_time, cook_time, total_time, servings), # select columns
+
+    .fns = list(
+      mean = ~ mean(., na.rm = T),
+      sd = sd,
+      min = min, max = max
+    )
+  )) %>% 
+  tt()
+```
+
+```{r}
+visdat::vis_dat(cuisines, sort_type = TRUE, palette = "cb_safe")
+```
+
+```{r}
+cuisines_modified <- cuisines %>% tidyr::drop_na()
+cuisines_modified
+```
+
+```{r}
+visdat::vis_dat(cuisines_modified, sort_type = TRUE, palette = "cb_safe")
+```
+
+```{r}
+cuisines_modified <- cuisines %>%
+  dplyr::mutate(across(where(is.character), as.factor)) %>% 
+  relocate(where(is.factor))
+glimpse(cuisines_modified)
+```
+
+```{r}
+cuisines_modified %>%
+  stats::setNames(c("Name_of_Cuisine","Country_of_Origin","URL","Author","Ingredients","Date_Published","Calories","Fat","Carbs","Protein","Average_Rating","Total_Ratings","Reviews","Preperation_Time","Cooking_Time","Total_Time","Servings"))
+
+cuisines_modified %>%
+  DT::datatable(
+    style = "default",
+    caption = htmltools::tags$caption(
+      style = "caption-side: top; text-align: left; color: black; font-size: 100%;", "Cuisines Dataset (Clean)"
+    ),
+    options = list(pageLength = 10, autoWidth = TRUE)
+  ) %>%
+  DT::formatStyle(
+    columns = names(cuisines_modified),
+    fontFamily = "Roboto Condensed",
+    fontSize = "12px",
+  )
+```
+
+
+```{r}
+crosstable(
+  calories + protein + carbs + fat
+  ~ country,        
+  data = cuisines_modified       
+) %>%
+  as_flextable()
+```
+
+## *4. Data Dictionary*
+
+### *Quantitative Data*
+
+1.  name(fct): Name of cuisine
+2.  country(fct): Country of origin
+3.  url(fct): Web link to the full recipe source or page
+4.  author(fct): Name or username of the recipe creator or contributor
+5.  date_published(date): Date when the recipe was published or posted online
+6.  ingredients(fct): List of ingredients required for the recipe
+
+### *Qualitative Data*
+
+1.  calories(dbl): Approximate total calorie content per serving
+2.  fat(dbl): Total fat content per serving (in grams)
+3.  carbs(dbl): Total carbohydrates per serving (in grams)
+4.  protein(dbl): Protein content per serving (in grams)
+5.  avg_rating(dbl): Average user rating for the recipe (on a scale from 1-5)
+6.  total_ratings(dbl): Total number of user ratings received
+7.  reviews(dbl): Number of text reviews or written comments
+8.  prep_time(dbl): Estimated preparation time before cooking (in minutes)
+9.  cook_time(dbl): Estimated cooking time (in minutes)
+10. total_time(dbl): Total time required for the recipe (prep + cook) in minutes
+11. servings(dbl): Number of servings the recipe yields
+
+## 5. *Graphs*
+
+### 1. How many recipes come from each country?
+
+```{r}
+cuisines_modified %>%
+  gf_bar(~ reorder(country, country, function(x) length(x)),
+    fill = "cyan4", position = "dodge") %>%
+  gf_labs(title = "Number of Recipes From Each Country",
+          x = "Country",
+          y = "Number of Recipes") %>%
+  gf_theme(theme(axis.text.x = element_text(angle = 45, hjust = 1)))
+
+```
+
+#### Inferences
+
+Belgian has the least number of recipes, while Canada has the most. India is among the top 5 countries.
+
+
+### 2. Does a longer cooking time generally result in higher-calorie recipes?
+
+```{r}
+cuisines_modified %>%
+gf_point(cook_time ~ calories, data = cuisines_modified, color = 'maroon', size = 2) %>%
+  gf_smooth(color = 'black') %>% 
+  gf_labs(title = "Does a longer cooking time generally result in higher-calorie recipes?",
+          x = "Cooking Time",
+          y = "Calories")
+```
+
+#### Inferences
+
+Yes, there is a positive correlation. More the cooking time, higher the calories
+Most recipes that have less cooking time also have less calories, except a few outliers that have less calories even if the cooking time is large.
+
+
+### 3. Which countries are known for having high-calorie cuisines?
+
+```{r}
+cuisines_modified %>%
+  group_by(country) %>%
+  dplyr::summarise(avg_protein = mean(protein, na.rm = TRUE)) %>%
+  arrange(desc(avg_protein)) %>%
+  slice_head(n = 10) %>%
+  mutate(country = factor(country, levels = country)) %>%
+  gf_col(
+    avg_protein ~ country,
+    fill = ~ avg_protein
+  ) %>%
+  gf_labs(
+    title = "Top 10 Countries with High Protein-Rich Cuisines",
+    x = "Country",
+    y = "Average Protein Content",
+    fill = "Average Protein"
+  ) +
+  scale_fill_gradient(low = "lightpink", high = "palevioletred") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+```
+
+#### Inferences
+
+Malaysian cuisine has the most protein-rich food. Followed by Cajun and creole, Italian, Indonesian and Cuban.
+
+
+### 4. What is the correlation between protein and calories in the food of these 10 countries?
+
+```{r}
+cuisines_modified %>%
+  group_by(country) %>%
+  dplyr::summarise(avg_protein = mean(protein, na.rm = TRUE)) %>%
+  arrange(desc(avg_protein)) %>%
+  slice_head(n = 10) %>%
+  pull(country) -> top10_protein_countries
+
+cuisines_modified %>%
+  filter(country %in% top10_protein_countries) %>%
+  gf_point(protein ~ calories, color = ~country) %>%
+  gf_facet_wrap(~country, scales = "free") %>%
+  gf_labs(
+    title = "Protein vs Calories of Cuisines from Top 10 Protein-Rich Countries",
+    x = "Calories",
+    y = "Protein (g)",
+    color = "Country"
+  ) %>%
+  gf_refine(
+    theme_minimal(),
+    theme(axis.text.x = element_text(angle = 45, hjust = 1))
+  )
+
+```
+
+#### Inferences
+
+While most cuisines show that more calories generally mean more protein, there are clear differences in the maximum content and protein density between the cuisines, with Portuguese and Southern Recipes having the most protein-rich individual dishes.
+
+### 5. Does total time taken to cook affect the number of people served?
+
+```{r}
+cuisines_modified %>%
+  gf_point(total_time ~ servings, colour = 'darkolivegreen') %>%
+  gf_lm(color = 'black') %>%
+  gf_labs(
+    title = "Total time vs Serving",
+    subtitle = "Does total time taken to cook affect the number of people served?",
+    x = 'Servings',
+    y = 'Total Time'
+  )
+
+```
+
+#### Inferences
+
+The graph shows the regression line going upwards, indicating a positive correlation.
+We can conclude that the total time taken for a recipe increases with the number of servings.
+
+### 6. Does total time taken to cook affect the average rating?
+
+```{r}
+cuisines_modified %>%
+  gf_point(total_time ~ avg_rating, colour = 'cornflowerblue') %>%
+  gf_lm(colour = 'black') %>%
+  gf_labs(
+    title = "Total Time vs Average Rating",
+    subtitle = "Does total time taken to cook affect the average rating?",
+    x = 'Average Rating',
+    y = 'Total Time'
+  )
+
+```
+
+#### Inferences
+
+From this graph we can infer that there is not much of a correlation between total time and avg rating. In fact, a lot of recipes that take a lot of time are rated high.
+
+### 7. Do the number of reviews affect the average rating?
+
+```{r}
+cuisines_modified %>%
+  gf_point(reviews ~ avg_rating, colour = 'brown') %>%
+  gf_lm(colour = 'black') %>%
+  gf_labs(
+    title = "Average Rating vs Number of Reviews",
+    subtitle = "Do the number of reviews affect the average rating?",
+    x = 'Average Rating',
+    y = 'Number of reviews'
+  )
+```
+
+#### Inferences
+
+From the graph, there seems to be a positive correlation between the reviews and the average rating.
+Popular recipes have a high rating.
+
+
+### 8. Does protein rich also mean calorie rich?
+
+```{r}
+cuisines_modified %>%
+  gf_point(calories ~ protein, colour = 'darkorchid3') %>%
+  gf_lm(colour = 'black') %>%
+  gf_labs(
+    title = "Calories vs Protein",
+    subtitle = "Does protein rich also mean calorie rich?",
+    x = 'Protein',
+    y = 'Calories'
+  )
+```
+
+#### Inferences
+
+This graph tells us that there is a significant positive correlation between the calories and the protein content.
+Some points are much higher than the rest, suggesting certain recipes may have high calorie counts despite moderate amounts of protein (or vice versa), due to other ingredients containing significant amounts of fats/carbs or other factors.
+
+
+## 6. *Summary of Inferences*
+
+The analysis shows that the total time taken for a recipe generally increases with the number of servings, indicating a positive correlation. However, total cooking time doesn’t strongly affect the average rating - many time-consuming recipes are rated highly.
+
+There is a clear positive correlation between the number of reviews and the average rating, suggesting that popular recipes tend to receive higher ratings. 
+Among cuisines, Belgian has the fewest recipes, while Canada has the most, with India ranking in the top five.
+
+A positive relationship is observed between cooking time and calories longer cooking times often correspond to higher-calorie dishes. 
+Most quick recipes tend to have lower calorie counts, though there are outliers.
+
+Malaysian cuisine stands out for having the most protein-rich dishes, followed by Cajun and Creole, Italian, Indonesian, and Cuban cuisines. A significant positive correlation also exists between calories and protein content, implying that protein-rich foods are often calorie-dense.
+
+

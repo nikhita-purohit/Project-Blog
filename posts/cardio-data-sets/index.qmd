@@ -1,0 +1,296 @@
+---
+title: "Cardiovascular Risk Factors"
+author: "Nikhita Purohit, Ihina Purohit, Rishi Joseph"
+date: "2025-10-20"
+categories: [code]
+---
+
+# ![](images/clipboard-3087856506.png)Cardiovascular Risk Factors
+
+Studying Cardiovascular Risk Factors
+
+EXPERIMENT OBJECTIVE : To explore how age, sex, lifestyle, and body measurements relate to cardiovascular and metabolic health.
+
+## *1. Setting up R Packages*
+
+```{r}
+# SETUP CHUNK- LIBRARIES
+#| label: setup
+#| echo: false
+library(tidyverse)
+library(mosaic) # Our all-in-one package
+library(skimr) # Looking at data
+library(janitor) # Clean the data
+library(naniar) # Handle missing data
+library(visdat) # Visualize missing data
+library(tinytable) # Printing Static Tables for our data
+library(DT) # Interactive Tables for our data
+library(crosstable) # Multiple variable summaries
+library(CardioDataSets)
+library(vcd)
+```
+
+## 2. *Reading and Cleaning Data*
+
+```{r}
+data("cardioRiskFactors_df", package = "CardioDataSets")
+cardio_modified <- cardioRiskFactors_df %>% 
+  janitor::clean_names(case="snake")
+cardio_modified
+```
+
+## 3. *Examining Data*
+
+```{r}
+dplyr::glimpse(cardio_modified)
+```
+
+```{r}
+skimr::skim(cardio_modified)
+```
+
+```{r}
+names(cardio_modified)
+```
+
+```{r}
+cardio_modified %>%
+  dplyr::summarise(across(
+    .cols = c(bmi, waisthip, choles, trig, hdl, ldl, dia, alco, apoa), # select columns
+
+    .fns = list(
+      mean = ~ mean(., na.rm = T),
+      sd = sd,
+      min = min, max = max
+    )
+  )) %>% 
+  tt()
+```
+
+```{r}
+visdat::vis_dat(cardioRiskFactors_df, sort_type = TRUE, palette = "default")
+```
+
+```{r}
+cardio_modified <- cardioRiskFactors_df %>% tidyr::drop_na()
+cardio_modified
+```
+
+```{r}
+visdat::vis_dat(cardio_modified, sort_type = TRUE, palette = "default")
+```
+
+```{r}
+cardio_modified <- cardioRiskFactors_df %>%
+  dplyr::mutate(across(where(is.character), as.factor)) %>% 
+  relocate(where(is.factor))
+glimpse(cardio_modified)
+```
+
+```{r}
+cardio_modified %>%
+  stats::setNames(c("Age","BMI","Waist_to_Hip_Ratio","Smoking_Status","Total_Cholesterol","Triglycerides_Level","High_Density_Lipoprotein","Low_Density_Lipoprotein","Systolic_Blood_Pressure","Diastolic_Blood_Pressure","Uric_Acid_Level","Sex","Alcohol_Consumption","Apolipoprotein_A"))
+
+cardio_modified %>%
+  DT::datatable(
+    style = "default",
+    caption = htmltools::tags$caption(
+      style = "caption-side: top; text-align: left; color: black; font-size: 100%;", "Cardio Dataset (Clean)"
+    ),
+    options = list(pageLength = 10, autoWidth = TRUE)
+  ) %>%
+  DT::formatStyle(
+    columns = names(cardio_modified),
+    fontFamily = "Roboto Condensed",
+    fontSize = "12px",
+  )
+```
+```{r}
+crosstable(
+  choles + sys + dia
+  ~ sex,        
+  data = cardioRiskFactors_df       
+) %>%
+  as_flextable()
+```
+
+
+
+## *4. Data Dictionary*
+
+### *Quantitative Data*
+
+1.  age(int): Age (years)
+2.  bmi(dbl): Body Mass Index
+3.  waisthip(dbl): Waist-to-hip ratio
+4.  smok(int): Smoking status (0 = non-smoker, 1 = smoker)
+5.  choles(dbl): Total cholesterol
+6.  trig(dbl): Triglycerides (the main constituents of natural fats and oils)
+7.  hdl(dbl): High-density lipo protein (good cholesterol)
+8.  ldl(dbl): Low-density lipo protein (bad cholesterol)
+9.  sys(int): Systolic blood pressure (the pressure of blood pushing against artery walls when your heart beats)
+10. dia(dbl): Diastolic blood pressure (the lower number in a blood pressure reading and represents the pressure in your arteries when your heart rests between beats)
+11. Uric(int): Uric acid level
+12. sex(int): Sex (0 = female, 1 = male)
+13. alco(dbl): Alcohol consumption
+14. apoa(dbl): Apolipoprotein A, a component of HDL
+
+## 5. *Graphs*
+
+### 1. How does age affect cholesterol levels?
+
+```{r}
+cardio_modified %>%
+gf_point(choles ~ age, data = cardio_modified, color = 'maroon', size = 2) %>%
+  gf_lm(color = 'black') %>% 
+  gf_labs(title = "Correlation Between Age and Cholesterol",
+          x = "Age",
+          y = "Total Cholesterol")
+```
+### Inferences
+
+The scatter plot shows a positive correlation between age and cholesterol levels. As age increases, cholesterol levels tend to rise slightly.
+The regression line indicates an upward trend, although the data points are widely scattered, implying that the relationship is pretty weak.
+
+
+## 2. Does the proportion of smokers differ between males and females?
+
+
+```{r}
+vcd::structable(data = cardio_modified, sex ~ smok) %>% 
+  as.matrix() %>% # Convert to matrix; 
+  addmargins() # Add margins to the table; matrix output
+```
+
+
+```{r}
+vcd::structable(sex ~ smok, data = cardio_modified) %>%
+    vcd::mosaic(gp = shading_max,
+                main = "Relationship between Smoking Status and Gender")
+```
+
+### Inferences
+
+This graph suggests that there are far more non-smoking females than expected as well as more smoking males than expected.
+Males are significantly more likely to be smokers than females in this data set.
+
+
+## 3. How does blood pressure distribution differ between smokers and non-smokers for males and females?
+
+```{r}
+cardio_modified %>%
+  gf_boxplot(sys ~ smok | sex, orientation = "x", fill = ~factor(sex)) %>%
+  gf_labs(
+    title = "Blood Pressure by Smoking Status and Sex",
+    x = "Smoking Status",
+    y = "Systolic BP",
+    fill = "Sex: 0 = Female, 1 = Male"
+  ) %>% 
+  gf_refine(scale_fill_brewer(palette = "Pastel1"))
+
+```
+### Inferences
+
+Females have higher overall systolic blood pressure as compared to males. Males have a wider spread of systolic blood pressure. There are more outliers for females than males, but there are a few exceptions suggesting that some males have high systolic blood pressure.
+
+
+## 4. How does BMI vary across different genders?
+
+```{r}
+cardio_modified %>%
+  gf_boxplot(
+    bmi ~ factor(sex),
+    fill = ~factor(sex),
+    alpha = 0.8,
+    orientation = 'x'
+  ) %>%
+  gf_labs(
+    title = "BMI Distribution by Gender",
+    x = "Sex",
+    y = "BMI",
+    fill = "Legend: 0 = Female, 1 = Male"
+  ) %>%
+  gf_refine(
+    scale_fill_brewer(palette = "Accent"),
+    theme_minimal()
+  )
+```
+
+### Inferences
+
+Females show a wider interquartile range (IQR), suggesting more variability in BMI.
+There are several outliers in both groups, but especially among females, indicating some individuals with unusually high BMI. Overall, this suggests that females in the dataset may have a higher average BMI and greater variation compared to males.
+
+
+## 5. What is the age distribution of people in the dataset?
+
+```{r}
+cardio_modified %>% 
+  gf_histogram(~ age,
+  data = cardio_modified,
+  bins = 30,
+  fill = '#fc6c85',
+  colour = '#222222') %>%
+  gf_labs(
+    title = "Distribution of Age",
+    x = 'Age',
+    y = 'Count'
+  )
+
+```
+
+### Inferences
+
+The distribution of age seems uneven, with several peaks. There isn’t a clear concentration around a single age range, meaning the data set includes participants from a wide variety of ages.
+
+
+## 6. How does cholesterol vary with smoking status and sex?
+
+```{r}
+cardio_modified %>%
+  gf_boxplot(
+    choles ~ factor(smok) | factor(sex),
+    fill = ~factor(smok),
+    alpha = 0.8,
+    orientation = 'x'
+  ) %>%
+  gf_labs(
+    title = "Cholesterol distribution by smoking status and sex",
+    x = "Smoking Status",
+    y = "Cholesterol",
+    fill = "Smoking Status"
+  )
+```
+
+### Inferences
+
+Median Cholesterol Levels:
+
+For females (0): Non-smokers and smokers have almost the same median cholesterol levels (around 5.7)
+For males (1): Non-smokers have a slightly higher median (around 5.5) compared to smokers (around 5.2 )
+
+Distribution:
+
+Female non-smokers show greater variability in cholesterol levels with 3 outliers above 10 mg/DL.
+Male non-smokers also display more spread in their data compared to male smokers.
+Smokers (both sexes) have fewer extreme values.
+
+Sex Differences:
+
+Females generally have higher cholesterol levels than males across both smoking categories. Females show more extreme upper outliers.
+The shorter line (whisker) for female smokers indicates a smaller range of cholesterol values compared to female non-smokers.
+
+
+## 6. *Summary of Inferences*
+
+
+Males demonstrate substantially higher smoking rates than females, while females exhibit elevated BMI, more variable cholesterol distributions, and greater outlier prevalence across multiple health metrics. 
+
+Age shows a positive correlation with cholesterol levels. 
+Males have higher systolic blood pressure overall, though females display more blood pressure outliers. 
+
+Surprisingly, smoking status shows minimal impact on blood pressure and cholesterol levels within sex groups, suggesting other factors may play stronger roles in cardiovascular health outcomes. 
+
+The age distribution remains fairly uniform across the sample population.
+
+

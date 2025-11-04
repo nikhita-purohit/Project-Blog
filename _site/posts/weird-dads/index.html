@@ -213,7 +213,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="is-your-dad-weird" class="level1">
 <h1>Is your dad weird?</h1>
-<p>Asking SMI and MIT Students If They Think Their Dad is Weird</p>
+<p>Are SMI dads weirder than MIT dads?</p>
 <p>EXPERIMENT OBJECTIVE: To find out if SMI dads are weirder than MIT dads.</p>
 <section id="setting-up-r-packages" class="level2">
 <h2 class="anchored" data-anchor-id="setting-up-r-packages"><em>1. Setting up R Packages</em></h2>
@@ -554,8 +554,8 @@ $ name         &lt;chr&gt; "Manya", "Sradha", "Arun", "Nidhi", "Shaurya", "Prath
 
     <script>
 
-      function styleCell_r5qk6cc179hf2y5dot02(i, j, css_id) {
-          var table = document.getElementById("tinytable_r5qk6cc179hf2y5dot02");
+      function styleCell_t4puafhcw0p4ts610g9y(i, j, css_id) {
+          var table = document.getElementById("tinytable_t4puafhcw0p4ts610g9y");
           var cell = table.querySelector(`[data-row="${i}"][data-col="${j}"]`);
           if (cell) {
               console.log(`Styling cell at (${i}, ${j}) with class ${css_id}`);
@@ -564,8 +564,8 @@ $ name         &lt;chr&gt; "Manya", "Sradha", "Arun", "Nidhi", "Shaurya", "Prath
               console.warn(`Cell at (${i}, ${j}) not found.`);
           }
       }
-      function spanCell_r5qk6cc179hf2y5dot02(i, j, rowspan, colspan) {
-        var table = document.getElementById("tinytable_r5qk6cc179hf2y5dot02");
+      function spanCell_t4puafhcw0p4ts610g9y(i, j, rowspan, colspan) {
+        var table = document.getElementById("tinytable_t4puafhcw0p4ts610g9y");
         const targetCell = table.querySelector(`[data-row="${i}"][data-col="${j}"]`);
         if (!targetCell) {
           console.warn(`Cell at (${i}, ${j}) not found.`);
@@ -596,14 +596,14 @@ $ name         &lt;chr&gt; "Manya", "Sradha", "Arun", "Nidhi", "Shaurya", "Prath
       window.addEventListener('load', function () {
           var cellsToStyle = [
             // tinytable style arrays after
-          { positions: [ { i: '5', j: 0 }, { i: '5', j: 1 }, { i: '5', j: 2 },  ], css_id: 'tinytable_css_ycnhwapmlk65wi6v85z2',}, 
-          { positions: [ { i: '0', j: 0 }, { i: '0', j: 1 }, { i: '0', j: 2 },  ], css_id: 'tinytable_css_4zoosicudw80ibwglniu',}, 
+          { positions: [ { i: '5', j: 0 }, { i: '5', j: 1 }, { i: '5', j: 2 },  ], css_id: 'tinytable_css_cwtjnlngug63vj7iviix',}, 
+          { positions: [ { i: '0', j: 0 }, { i: '0', j: 1 }, { i: '0', j: 2 },  ], css_id: 'tinytable_css_b8wp7cbjur2wgsa9oard',}, 
           ];
 
           // Loop over the arrays to style the cells
           cellsToStyle.forEach(function (group) {
               group.positions.forEach(function (cell) {
-                  styleCell_r5qk6cc179hf2y5dot02(cell.i, cell.j, group.css_id);
+                  styleCell_t4puafhcw0p4ts610g9y(cell.i, cell.j, group.css_id);
               });
           });
       });
@@ -611,11 +611,11 @@ $ name         &lt;chr&gt; "Manya", "Sradha", "Arun", "Nidhi", "Shaurya", "Prath
 
     <style>
       /* tinytable css entries after */
-      .table td.tinytable_css_ycnhwapmlk65wi6v85z2, .table th.tinytable_css_ycnhwapmlk65wi6v85z2 { border-bottom: solid #d3d8dc 0.1em; }
-      .table td.tinytable_css_4zoosicudw80ibwglniu, .table th.tinytable_css_4zoosicudw80ibwglniu { border-top: solid #d3d8dc 0.1em; border-bottom: solid #d3d8dc 0.05em; }
+      .table td.tinytable_css_cwtjnlngug63vj7iviix, .table th.tinytable_css_cwtjnlngug63vj7iviix { border-bottom: solid #d3d8dc 0.1em; }
+      .table td.tinytable_css_b8wp7cbjur2wgsa9oard, .table th.tinytable_css_b8wp7cbjur2wgsa9oard { border-top: solid #d3d8dc 0.1em; border-bottom: solid #d3d8dc 0.05em; }
     </style>
     <div class="container">
-      <table class="table table-borderless" id="tinytable_r5qk6cc179hf2y5dot02" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
+      <table class="table table-borderless" id="tinytable_t4puafhcw0p4ts610g9y" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
         <thead>
         
               <tr>
@@ -703,8 +703,8 @@ $ name         &lt;fct&gt; Manya, Sradha, Arun, Nidhi, Shaurya, Pratham, Jeevan,
 <span id="cb37-12"><a href="#cb37-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">fontSize =</span> <span class="st">"12px"</span>,</span>
 <span id="cb37-13"><a href="#cb37-13" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div class="datatables html-widget html-fill-item" id="htmlwidget-8d4d29f8af81017583ce" style="width:100%;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-8d4d29f8af81017583ce">{"x":{"filter":"none","vertical":false,"caption":"<caption style=\"caption-side: top; text-align: left; color: black; font-size: 100%;\">Weird Dads Dataset (Clean)<\/caption>","data":[["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36","37","38","39","40","41","42","43","44","45","46","47","48","49","50","51","52","53","54","55","56","57","58","59","60","61","62","63","64","65"],["F","F","M","F","M","M","M","M","F","M","F","M","F","F","M","M","F","M","M","M","M","M","M","F","M","M","F","F","F","F","F","F","F","M","F","F","M","M","M","M","M","NB","F","F","F","F","F","F","F","M","F","M","F","M","F","F","F","M","M","M","M","F","M","M","F"],["SMI","SMI","SMI","SMI","MIT","MIT","MIT","SMI","SMI","SMI","SMI","SMI","SMI","SMI","MIT","MIT","MIT","MIT","MIT","MIT","MIT","MIT","MIT","MIT","MIT","MIT","MIT","MIT","MIT","MIT","MIT","MIT","MIT","MIT","MIT","SMI","SMI","SMI","SMI","SMI","MIT","MIT","MIT","MIT","MIT","MIT","SMI","SMI","SMI","SMI","SMI","SMI","SMI","SMI","SMI","SMI","SMI","SMI","SMI","SMI","MIT","MIT","SMI","MIT","MIT"],["No","No","No","Yes","No","No","No","No","Yes","Yes","Yes","Yes","No","No","No","No","No","No",null,"No","No","No","No","Yes","No","No","No","No","No","No","No","No","No","No","No","No","No","No","Yes","Yes","No","Yes","Yes","No","No","No","No","Yes","Yes","Yes","No","No","No","No","No","Yes","No","No","Yes","No","No","No","No","Yes","Yes"],["Manya","Sradha","Arun","Nidhi","Shaurya","Pratham","Jeevan","Dhruv","Aakrati","Aakrsh","Kshirav","Aaron","Vagmi","Anushka","Arnav","Harshad","Bhavana","Sumeru","Anonymous","Vinamrah","Neel","Sanihith","Jayden","Harshitha","Rithesh","Arjun","Khushi","Niharika","Teertha","Chitra","Jahanvi","Khanna","Ayanna","Mridul","Yakinya","Ananya","Aadil","Shiva","Aaditya","Rahul","Akshat","Shreya","Payal","Manasvi","Shadeeksha","Purvi","Vedika","Aashna","Shubhangini","Nirmay","Riya","Arun","Avanthika","Nitheesh","Lakshitha","Bhadra","Savanna","Kaiser","Anay","Neel","Amogh","Nandini","Susheel","Garvit","Sri Lakshmi"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>gender<\/th>\n      <th>college<\/th>\n      <th>is_dad_weird<\/th>\n      <th>name<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":10,"autoWidth":true,"columnDefs":[{"orderable":false,"targets":0},{"name":" ","targets":0},{"name":"gender","targets":1},{"name":"college","targets":2},{"name":"is_dad_weird","targets":3},{"name":"name","targets":4}],"order":[],"orderClasses":false,"rowCallback":"function(row, data, displayNum, displayIndex, dataIndex) {\nvar value=data[1]; $(this.api().cell(row, 1).node()).css({'font-family':'Roboto Condensed','font-size':'12px'});\nvar value=data[2]; $(this.api().cell(row, 2).node()).css({'font-family':'Roboto Condensed','font-size':'12px'});\nvar value=data[3]; $(this.api().cell(row, 3).node()).css({'font-family':'Roboto Condensed','font-size':'12px'});\nvar value=data[4]; $(this.api().cell(row, 4).node()).css({'font-family':'Roboto Condensed','font-size':'12px'});\n}"}},"evals":["options.rowCallback"],"jsHooks":[]}</script>
+<div class="datatables html-widget html-fill-item" id="htmlwidget-6bc1aba9d7c9ccc9c3bb" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-6bc1aba9d7c9ccc9c3bb">{"x":{"filter":"none","vertical":false,"caption":"<caption style=\"caption-side: top; text-align: left; color: black; font-size: 100%;\">Weird Dads Dataset (Clean)<\/caption>","data":[["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36","37","38","39","40","41","42","43","44","45","46","47","48","49","50","51","52","53","54","55","56","57","58","59","60","61","62","63","64","65"],["F","F","M","F","M","M","M","M","F","M","F","M","F","F","M","M","F","M","M","M","M","M","M","F","M","M","F","F","F","F","F","F","F","M","F","F","M","M","M","M","M","NB","F","F","F","F","F","F","F","M","F","M","F","M","F","F","F","M","M","M","M","F","M","M","F"],["SMI","SMI","SMI","SMI","MIT","MIT","MIT","SMI","SMI","SMI","SMI","SMI","SMI","SMI","MIT","MIT","MIT","MIT","MIT","MIT","MIT","MIT","MIT","MIT","MIT","MIT","MIT","MIT","MIT","MIT","MIT","MIT","MIT","MIT","MIT","SMI","SMI","SMI","SMI","SMI","MIT","MIT","MIT","MIT","MIT","MIT","SMI","SMI","SMI","SMI","SMI","SMI","SMI","SMI","SMI","SMI","SMI","SMI","SMI","SMI","MIT","MIT","SMI","MIT","MIT"],["No","No","No","Yes","No","No","No","No","Yes","Yes","Yes","Yes","No","No","No","No","No","No",null,"No","No","No","No","Yes","No","No","No","No","No","No","No","No","No","No","No","No","No","No","Yes","Yes","No","Yes","Yes","No","No","No","No","Yes","Yes","Yes","No","No","No","No","No","Yes","No","No","Yes","No","No","No","No","Yes","Yes"],["Manya","Sradha","Arun","Nidhi","Shaurya","Pratham","Jeevan","Dhruv","Aakrati","Aakrsh","Kshirav","Aaron","Vagmi","Anushka","Arnav","Harshad","Bhavana","Sumeru","Anonymous","Vinamrah","Neel","Sanihith","Jayden","Harshitha","Rithesh","Arjun","Khushi","Niharika","Teertha","Chitra","Jahanvi","Khanna","Ayanna","Mridul","Yakinya","Ananya","Aadil","Shiva","Aaditya","Rahul","Akshat","Shreya","Payal","Manasvi","Shadeeksha","Purvi","Vedika","Aashna","Shubhangini","Nirmay","Riya","Arun","Avanthika","Nitheesh","Lakshitha","Bhadra","Savanna","Kaiser","Anay","Neel","Amogh","Nandini","Susheel","Garvit","Sri Lakshmi"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>gender<\/th>\n      <th>college<\/th>\n      <th>is_dad_weird<\/th>\n      <th>name<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":10,"autoWidth":true,"columnDefs":[{"orderable":false,"targets":0},{"name":" ","targets":0},{"name":"gender","targets":1},{"name":"college","targets":2},{"name":"is_dad_weird","targets":3},{"name":"name","targets":4}],"order":[],"orderClasses":false,"rowCallback":"function(row, data, displayNum, displayIndex, dataIndex) {\nvar value=data[1]; $(this.api().cell(row, 1).node()).css({'font-family':'Roboto Condensed','font-size':'12px'});\nvar value=data[2]; $(this.api().cell(row, 2).node()).css({'font-family':'Roboto Condensed','font-size':'12px'});\nvar value=data[3]; $(this.api().cell(row, 3).node()).css({'font-family':'Roboto Condensed','font-size':'12px'});\nvar value=data[4]; $(this.api().cell(row, 4).node()).css({'font-family':'Roboto Condensed','font-size':'12px'});\n}"}},"evals":["options.rowCallback"],"jsHooks":[]}</script>
 </div>
 </div>
 </section>

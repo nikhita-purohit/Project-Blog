@@ -1,0 +1,230 @@
+---
+title: "Weekly Expenditure"
+author: "Nikhita Purohit"
+date: "2025-11-04"
+categories: [code]
+---
+
+![](images/clipboard-2672623166.png)
+
+# How Much Did You Spend Last Week?
+
+Studying Weekly Expenditures
+
+EXPERIMENT OBJECTIVE: To determine whether women have a higher total weekly expenditure than men.
+
+## *1. Setting up R Packages*
+
+```{r}
+# SETUP CHUNK- LIBRARIES
+#| label: setup
+#| echo: false
+#| warning: false
+#| message: false
+
+library(tidyverse)
+library(mosaic) # Our all-in-one package
+library(skimr) # Looking at data
+library(janitor) # Clean the data
+library(naniar) # Handle missing data
+library(visdat) # Visualize missing data
+library(tinytable) # Printing Static Tables for our data
+library(DT) # Interactive Tables for our data
+library(crosstable) # Multiple variable summaries
+library(CardioDataSets)
+library(vcd)
+
+library(ggformula)
+library(infer)
+library(broom) # Clean test results in tibble form
+library(resampledata) # Datasets from Chihara and Hesterberg's book
+library(openintro) # More datasets
+library(visStatistics) # One package to rule them all
+library(ggstatsplot)
+```
+
+## 2. *Read Data*
+
+```{r}
+money_modified <- money <- readr::read_csv("../data/4-weekly_expenditure.csv")%>%
+  # Clean variable names
+  janitor::clean_names(case="snake")
+money_modified
+```
+
+## 3. *Examine Data*
+
+```{r}
+dplyr::glimpse(money_modified)
+```
+
+```{r}
+skimr::skim(money_modified)
+```
+
+```{r}
+names(money_modified)
+```
+
+```{r}
+visdat::vis_dat(money, sort_type = TRUE, palette = "default")
+```
+
+```{r}
+money_modified <- money %>% tidyr::drop_na()
+money_modified
+```
+
+```{r}
+visdat::vis_dat(money_modified, sort_type = TRUE, palette = "default")
+```
+
+```{r}
+money_modified %>%
+  dplyr::summarise(across(
+    .cols = c(total_expenditure_last_week), # select columns
+
+    .fns = list(
+      mean = ~ mean(., na.rm = T),
+      sd = sd,
+      min = min, max = max
+    )
+  )) %>% 
+  tt()
+```
+
+```{r}
+money_modified <- money %>%
+  dplyr::mutate(across(where(is.character), as.factor)) %>% 
+  relocate(where(is.factor))
+glimpse(money_modified)
+```
+
+```{r}
+money_modified %>%
+  stats::setNames(c("Name", "Gender", "Total_Expenditure_Last_Week"))
+
+money_modified %>%
+  DT::datatable(
+    style = "default",
+    caption = htmltools::tags$caption(
+      style = "caption-side: top; text-align: left; color: black; font-size: 100%;", "Weekly Expenditure Dataset (Clean)"
+    ),
+    options = list(pageLength = 10, autoWidth = TRUE)
+  ) %>%
+  DT::formatStyle(
+    columns = names(money_modified),
+    fontFamily = "Roboto Condensed",
+    fontSize = "12px",
+  )
+```
+
+## 4. *Data Dictionary*
+
+### *Qualitative Data*
+
+1.  name(fct): Name of the student
+2.  gender(fct): Gender of the student
+
+### *Quantitative Data*
+
+1.  total_expenditure_last_week(dbl): Total expenditure of the student the previous week (in Rupees)
+
+# 5. *Graphs*
+
+## 1. Which gender has a higher weekly expenditure?
+
+```{r}
+money_modified2 <- money %>%
+  group_by(gender) %>%
+  summarise(average_expenditure = mean(total_expenditure_last_week, na.rm = TRUE))
+
+money_modified2 %>% 
+  gf_col(average_expenditure ~ gender,
+         fill = ~ gender) %>%
+  gf_labs(title = "Which gender has a higher weekly expenditure?",
+          x = "Gender",
+          y = "Average Weekly Expenditure",
+          fill = "Legend: Gender") %>% 
+  gf_refine(scale_fill_brewer(palette = "Pastel1"))
+
+```
+
+### Inferences
+
+While we surveyed people and told them our objective, a lot of them assumed that women would have a higher weekly expenditure. But clearly, from the data we can tell that men have a much higher average weekly expenditure than women.
+
+One of the men we surveyed mentioned that he bought an electronic device the previous week, which is why his expenditure was so high (50,000).
+Perhaps if we had surveyed different men, the data would be comparable.
+
+## 2. What does the distribution of weekly expenditures look like for different genders?
+
+```{r}
+money_modified %>%
+  gf_boxplot(total_expenditure_last_week ~ gender,
+             fill = ~gender,
+             orientation = 'x') %>%
+  gf_labs(title = "What does the distribution of weekly expenditures look like for different genders?",
+          x = "Gender",
+          y = "Total Expenditure Last Week",
+          fill = "Legend: Gender") %>% 
+  gf_refine(scale_fill_brewer(palette = "Greens"))
+```
+
+### Inferences
+
+Men, on average, tend to spend more than women, and there is greater variability in their spending habits, mainly because of the few men with very high expenditures. Female spending is generally more concentrated at the lower end, with fewer extreme high spenders.
+
+## 3. What is the overall distribution of weekly expenditure?
+
+```{r}
+money%>% 
+gf_histogram(~ total_expenditure_last_week,
+             data = money_modified,
+             fill = "#ff69b4", 
+             color = "black") %>%
+  gf_labs(title = "What is the overall distribution of weekly expenditure?",
+          x = "Weekly Expenditure",
+          y = "Count")
+```
+
+### Inferences
+
+It is evident from the graph that the data is highly skewed. Most of the values are concentrated towards the lower end, with a few exceptions of extremely high values. Most expenditures lie between 0-10,000.
+
+## 6. *Summary of Inferences*
+
+People initially expected women to spend more, but the data shows the opposite- men have a higher average weekly expenditure. This result is influenced by a few male outliers, including one who spent 50,000 on an electronic device. Because of these extreme values, men's spending shows much greater variability, while women's spending remains more consistent and lower overall. The distribution is highly skewed, with most students spending between 0–10,000 and only a few reporting very high expenses. If the sample included different participants, the averages might look more similar.
+
+## 7. *Surprising Aspects*
+
+Even if we didn't consider that one man who spent 50,000, the expenditures of other men were also significantly higher than that of women. What's funny is that, almost all women were a little hesitant to tell us their expenditure, considering that it was too high and they felt a bit ashamed. Men on the other hand were more open with sharing their details, even though they were at least 3,000-4,000 more than what the women had said. Perhaps we could conclude another thing, that women are more conscious about their spending than men.
+
+## 8. *T test- Inference for a single mean*
+
+```{r}
+stats::shapiro.test(x = money_modified$total_expenditure_last_week) %>%
+  broom::tidy()
+```
+
+```{r}
+library(nortest)
+# Especially when we have >= 5000 observations
+nortest::ad.test(x = money_modified$total_expenditure_last_week) %>%
+  broom::tidy()
+```
+
+The distribution of the total expenditure of students from the previous week is significantly different from a normal distribution.
+
+```{r}
+# t-test
+money_ttest <- mosaic::t_test(
+  money_modified$total_expenditure_last_week, # Name of variable
+  mu = 0, # belief
+  alternative = "two.sided"
+) %>% # Check both sides
+  broom::tidy()
+money_ttest
+```
+
+Since the p-value = 0.0009184396 is much smaller than 0.05, we reject the null hypothesis. The 95% confidence interval ([2108.431, 7558.314]) does not include 0. Thus, we can conclude that the average expenditure is significantly greater than 0.

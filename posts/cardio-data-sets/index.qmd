@@ -105,6 +105,7 @@ cardio_modified %>%
     fontSize = "12px",
   )
 ```
+
 ```{r}
 crosstable(
   choles + sys + dia
@@ -113,8 +114,6 @@ crosstable(
 ) %>%
   as_flextable()
 ```
-
-
 
 ## *4. Data Dictionary*
 
@@ -147,21 +146,18 @@ gf_point(choles ~ age, data = cardio_modified, color = 'maroon', size = 2) %>%
           x = "Age",
           y = "Total Cholesterol")
 ```
+
 ### Inferences
 
-The scatter plot shows a positive correlation between age and cholesterol levels. As age increases, cholesterol levels tend to rise slightly.
-The regression line indicates an upward trend, although the data points are widely scattered, implying that the relationship is pretty weak.
-
+The scatter plot shows a positive correlation between age and cholesterol levels. As age increases, cholesterol levels tend to rise slightly. The regression line indicates an upward trend, although the data points are widely scattered, implying that the relationship is pretty weak.
 
 ## 2. Does the proportion of smokers differ between males and females?
-
 
 ```{r}
 vcd::structable(data = cardio_modified, sex ~ smok) %>% 
   as.matrix() %>% # Convert to matrix; 
   addmargins() # Add margins to the table; matrix output
 ```
-
 
 ```{r}
 vcd::structable(sex ~ smok, data = cardio_modified) %>%
@@ -171,9 +167,7 @@ vcd::structable(sex ~ smok, data = cardio_modified) %>%
 
 ### Inferences
 
-This graph suggests that there are far more non-smoking females than expected as well as more smoking males than expected.
-Males are significantly more likely to be smokers than females in this data set.
-
+This graph suggests that there are far more non-smoking females than expected as well as more smoking males than expected. Males are significantly more likely to be smokers than females in this data set.
 
 ## 3. How does blood pressure distribution differ between smokers and non-smokers for males and females?
 
@@ -189,10 +183,10 @@ cardio_modified %>%
   gf_refine(scale_fill_brewer(palette = "Pastel1"))
 
 ```
+
 ### Inferences
 
 Females have higher overall systolic blood pressure as compared to males. Males have a wider spread of systolic blood pressure. There are more outliers for females than males, but there are a few exceptions suggesting that some males have high systolic blood pressure.
-
 
 ## 4. How does BMI vary across different genders?
 
@@ -218,9 +212,7 @@ cardio_modified %>%
 
 ### Inferences
 
-Females show a wider interquartile range (IQR), suggesting more variability in BMI.
-There are several outliers in both groups, but especially among females, indicating some individuals with unusually high BMI. Overall, this suggests that females in the dataset may have a higher average BMI and greater variation compared to males.
-
+Females show a wider interquartile range (IQR), suggesting more variability in BMI. There are several outliers in both groups, but especially among females, indicating some individuals with unusually high BMI. Overall, this suggests that females in the dataset may have a higher average BMI and greater variation compared to males.
 
 ## 5. What is the age distribution of people in the dataset?
 
@@ -242,7 +234,6 @@ cardio_modified %>%
 ### Inferences
 
 The distribution of age seems uneven, with several peaks. There isn’t a clear concentration around a single age range, meaning the data set includes participants from a wide variety of ages.
-
 
 ## 6. How does cholesterol vary with smoking status and sex?
 
@@ -266,31 +257,22 @@ cardio_modified %>%
 
 Median Cholesterol Levels:
 
-For females (0): Non-smokers and smokers have almost the same median cholesterol levels (around 5.7)
-For males (1): Non-smokers have a slightly higher median (around 5.5) compared to smokers (around 5.2 )
+For females (0): Non-smokers and smokers have almost the same median cholesterol levels (around 5.7) For males (1): Non-smokers have a slightly higher median (around 5.5) compared to smokers (around 5.2 )
 
 Distribution:
 
-Female non-smokers show greater variability in cholesterol levels with 3 outliers above 10 mg/DL.
-Male non-smokers also display more spread in their data compared to male smokers.
-Smokers (both sexes) have fewer extreme values.
+Female non-smokers show greater variability in cholesterol levels with 3 outliers above 10 mg/DL. Male non-smokers also display more spread in their data compared to male smokers. Smokers (both sexes) have fewer extreme values.
 
 Sex Differences:
 
-Females generally have higher cholesterol levels than males across both smoking categories. Females show more extreme upper outliers.
-The shorter line (whisker) for female smokers indicates a smaller range of cholesterol values compared to female non-smokers.
-
+Females generally have higher cholesterol levels than males across both smoking categories. Females show more extreme upper outliers. The shorter line (whisker) for female smokers indicates a smaller range of cholesterol values compared to female non-smokers.
 
 ## 6. *Summary of Inferences*
 
+Males demonstrate substantially higher smoking rates than females, while females exhibit elevated BMI, more variable cholesterol distributions, and greater outlier prevalence across multiple health metrics.
 
-Males demonstrate substantially higher smoking rates than females, while females exhibit elevated BMI, more variable cholesterol distributions, and greater outlier prevalence across multiple health metrics. 
+Age shows a positive correlation with cholesterol levels. Males have higher systolic blood pressure overall, though females display more blood pressure outliers.
 
-Age shows a positive correlation with cholesterol levels. 
-Males have higher systolic blood pressure overall, though females display more blood pressure outliers. 
-
-Surprisingly, smoking status shows minimal impact on blood pressure and cholesterol levels within sex groups, suggesting other factors may play stronger roles in cardiovascular health outcomes. 
+Surprisingly, smoking status shows minimal impact on blood pressure and cholesterol levels within sex groups, suggesting other factors may play stronger roles in cardiovascular health outcomes.
 
 The age distribution remains fairly uniform across the sample population.
-
-

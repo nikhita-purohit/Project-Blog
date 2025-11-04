@@ -169,36 +169,26 @@ ufo_modified2 %>%
 
 ```
 
-
 # 6. *Summary of Findings*
 
-1. The USA has reported the most UFO sightings over the years, next being Canada.
+1.  The USA has reported the most UFO sightings over the years, next being Canada.
 
-2. Encounter duration with UFOs has remained almost the same over the years, with a few exceptions.
+2.  Encounter duration with UFOs has remained almost the same over the years, with a few exceptions.
 
-3. UFO encounters in Great Britain tend to be the longest as compared to Australia, Canada and USA.
+3.  UFO encounters in Great Britain tend to be the longest as compared to Australia, Canada and USA.
 
-4. Duration of UFO encounters varies widely in USA, and very scarcely in Australia. 
+4.  Duration of UFO encounters varies widely in USA, and very scarcely in Australia.
 
-5. The most frequently sighted UFO Shape is 'light'. This particularly shaped UFO was spotted in all four countries on varied days.
+5.  The most frequently sighted UFO Shape is 'light'. This particularly shaped UFO was spotted in all four countries on varied days.
 
-6. The lesser frequently sighted UFO Shapes include 'changed', 'crescent', 'flare', 'hexagon' and 'pyramid'.
-
-
+6.  The lesser frequently sighted UFO Shapes include 'changed', 'crescent', 'flare', 'hexagon' and 'pyramid'.
 
 # 7. *Surprising Aspects*
 
-1. Why are there more UFOs spotted in USA? Could they be mistaking objects as UFOs?
+1.  Why are there more UFOs spotted in USA? Could they be mistaking objects as UFOs?
 
-2. According to the data set, there are UFO sightings that were documented only years after they were reported, which is very strange.
+2.  According to the data set, there are UFO sightings that were documented only years after they were reported, which is very strange.
 
-3. Duration of UFO encounters seem to be higher in the Northern countries.
+3.  Duration of UFO encounters seem to be higher in the Northern countries.
 
-4. I was unaware of the variety in shapes of UFOs that existed. 
-
-
-
-
-
-
-
+4.  I was unaware of the variety in shapes of UFOs that existed.

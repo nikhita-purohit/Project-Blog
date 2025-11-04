@@ -1,0 +1,204 @@
+---
+title: "Tattoo Attraction"
+author: "Nikhita Purohit"
+date: "2025-11-04"
+categories: [code]
+---
+
+![](images/clipboard-2034012849.png)
+
+# Do You Find Tattoos Attractive?
+
+Studying Public Perceptions of Tattoos
+
+EXPERIMENT OBJECTIVE: To explore whether students tend to find tattoos attractive.
+
+## *1. Setting up R Packages*
+
+```{r}
+# SETUP CHUNK- LIBRARIES
+#| label: setup
+#| echo: false
+#| warning: false
+#| message: false
+
+library(tidyverse)
+library(mosaic) # Our all-in-one package
+library(skimr) # Looking at data
+library(janitor) # Clean the data
+library(naniar) # Handle missing data
+library(visdat) # Visualise missing data
+library(tinytable) # Printing Static Tables for our data
+library(DT) # Interactive Tables for our data
+library(crosstable) # Multiple variable summaries
+
+library(vcd)
+library(visStatistics) # One package to test them all
+### Dataset from Chihara and Hesterberg's book (Second Edition)
+library(resampledata)
+```
+
+## 2. *Read Data*
+
+```{r}
+tattoo_modified <- tattoo <- readr::read_csv("../data/1-tattoo_attraction.csv")%>%
+  # Clean variable names
+  janitor::clean_names(case="snake")
+tattoo_modified
+```
+
+## 3. *Examine Data*
+
+```{r}
+dplyr::glimpse(tattoo_modified)
+```
+
+```{r}
+skimr::skim(tattoo_modified)
+```
+
+```{r}
+names(tattoo_modified)
+```
+
+```{r}
+visdat::vis_dat(tattoo, sort_type = TRUE, palette = "default")
+```
+
+```{r}
+tattoo_modified <- tattoo %>% tidyr::drop_na()
+tattoo_modified
+```
+
+```{r}
+visdat::vis_dat(tattoo_modified, sort_type = TRUE, palette = "default")
+```
+
+```{r}
+tattoo_modified <- tattoo %>%
+  dplyr::mutate(across(where(is.character), as.factor))
+glimpse(tattoo_modified)
+```
+
+```{r}
+tattoo_modified %>%
+  stats::setNames(c("Name", "Gender", "Are_Tattoos_Attractive"))
+
+tattoo_modified %>%
+  DT::datatable(
+    style = "default",
+    caption = htmltools::tags$caption(
+      style = "caption-side: top; text-align: left; color: black; font-size: 100%;", "Tattoo Attraction Dataset (Clean)"
+    ),
+    options = list(pageLength = 10, autoWidth = TRUE)
+  ) %>%
+  DT::formatStyle(
+    columns = names(tattoo_modified),
+    fontFamily = "Roboto Condensed",
+    fontSize = "12px",
+  )
+```
+
+## 4. *Data Dictionary*
+
+### *Qualitative Data*
+
+1.  name(fct): Name of the student
+2.  gender(fct): Gender of the student (M/F)
+3.  tattoo_attractive(fct): If the student finds tattoos attractive (Yes/No)
+
+## 5. *Graphs*
+
+## 1. Do women tend to find tattoos more attractive than men do?
+
+```{r}
+tattoo_modified %>%
+  dplyr::count(gender, tattoo_attractive) %>%
+  tt()
+```
+
+```{r}
+tattoo_modified %>% 
+  gf_bar(~tattoo_attractive, fill = ~gender, position = "fill") %>% 
+  gf_labs(title = "Do women tend to find tattoos more attractive than men do?",
+          x = "Attraction Towards Tattoos",
+          y = "Count",
+          fill = "Legend: Gender")
+```
+
+### Inferences
+
+From this sample, it is evident that the number of women who like and dislike tattoos are equal to the number of men who like and dislike tattoos. However, it is possible that a correlation could be found if the sample was different.
+
+## 2. What is the relationship between gender and their attraction towards tattoos?
+
+```{r}
+vcd::structable(data = tattoo_modified, gender ~ tattoo_attractive) %>% 
+  as.matrix() %>%  
+  addmargins()
+```
+
+```{r}
+vcd::structable(gender ~ tattoo_attractive, data = tattoo_modified) %>%
+    vcd::mosaic(gp = shading_max,
+                main = "What is the relationship between gender and their attraction towards tattoos?")
+```
+
+### Inferences
+
+From this particular sample, there is no correlation between gender and their attraction towards tattoos because the number of women who like and dislike tattoos are equal to the number of men who like and dislike tattoos (by coincidence).
+
+There is no colour in the mosaic graph because the data fits the expected model perfectly. There is no difference between genders. The proportions are identical:
+
+15/20 Females = 75% Yes 15/20 Males = 75% Yes
+
+So there is zero association between gender and tattoo preference in your sample, hence zero residuals.
+
+## 3. Do more people like tattoos, or do more people dislike them?
+
+```{r}
+tattoo_modified %>%
+  dplyr::count(tattoo_attractive) %>%
+  tt()
+```
+
+```{r}
+tattoo_modified %>% 
+  gf_bar(~ tattoo_attractive, fill = ~tattoo_attractive) %>% 
+  gf_labs(title = "Do more people like tattoos, or do more people dislike them? ",
+             x = "Attraction Towards Tattoos",
+             y = "Count",
+          fill = "Legend: Attraction Towards Tattoos")  %>% 
+  gf_refine(scale_fill_brewer(palette = "RdPu"))
+```
+
+### Inferences
+
+Out of the 40 students who were surveyed, 30 of them find tattoos attractive, while 10 of them do not. Clearly, students are more likely to like tattoos than dislike them.
+
+## 6. *Summary of Inferences*
+
+From this sample of 40 students, 30 reported finding tattoos attractive and 10 did not, indicating that students are generally more likely to like tattoos than dislike them.
+
+The proportions of males and females who find tattoos attractive are identical (75% each), meaning there is no difference in tattoo preference between genders in this dataset. The mosaic plot shows no colour variation because the observed proportions match the expected proportions perfectly. Therefore, there is no evidence of any association between gender and tattoo preference in this sample. The result appears to be coincidental rather than indicative of a real relationship.
+
+## 7. *Surprising Aspects*
+
+It is surprising to see that the data is proportionate. Not much can be inferred from this data sample. I am curious to see how the graphs would change with a different sample.
+
+## 8. *Binom test- Inference test for a single proportion*
+
+Null hypothesis: 50% of the students find tattoos attractive. Alternative hypothesis: The proportion of students who find tattoos attractive is either less than or more than 50%.
+
+```{r}
+mosaic::binom.test(~ tattoo_attractive, data = tattoo_modified, success = "Yes")
+```
+
+```{r}
+mosaic::binom.test(~ tattoo_attractive, data = tattoo_modified, success = "Yes") %>%
+  broom::tidy()
+```
+
+From the binomial test, we can conclude that the estimate value for this sample = 0.75, and that based on this, the population proportion of those who find tattoos attractive is also not 0.5, since the p-value is 0.002221434. So we reject the NULL hypothesis and accept the alternative hypothesis, that the proportion is not 0.5 and more like 0.75.
+
+-   

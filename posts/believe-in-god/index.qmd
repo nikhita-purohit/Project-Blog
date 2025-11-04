@@ -1,0 +1,192 @@
+---
+title: "Believe in God"
+author: "Nikhita Purohit"
+date: "2025-11-04"
+categories: [code]
+---
+
+# ![](images/clipboard-626905410.png)
+
+# Do You Believe in God?
+
+Studying Belief Patterns
+
+EXPERIMENT OBJECTIVE: To explore whether students tend to believe in God.
+
+## *1. Setting up R Packages*
+
+```{r}
+# SETUP CHUNK- LIBRARIES
+#| label: setup
+#| echo: false
+#| warning: false
+#| message: false
+
+library(tidyverse)
+library(mosaic) # Our all-in-one package
+library(skimr) # Looking at data
+library(janitor) # Clean the data
+library(naniar) # Handle missing data
+library(visdat) # Visualise missing data
+library(tinytable) # Printing Static Tables for our data
+library(DT) # Interactive Tables for our data
+library(crosstable) # Multiple variable summaries
+
+library(vcd)
+library(visStatistics) # One package to test them all
+### Dataset from Chihara and Hesterberg's book (Second Edition)
+library(resampledata)
+```
+
+## 2. *Reading and Cleaning Data*
+
+```{r}
+god_modified <- god <- readr::read_csv("../data/5-believe_in_god.csv")%>%
+  # Clean variable names
+  janitor::clean_names(case="snake")
+god_modified
+```
+
+## 3. *Examine Data*
+
+```{r}
+dplyr::glimpse(god_modified)
+```
+
+```{r}
+skimr::skim(god_modified)
+```
+
+```{r}
+names(god_modified)
+```
+
+```{r}
+visdat::vis_dat(god, sort_type = TRUE, palette = "default")
+```
+
+```{r}
+god_modified <- god %>% tidyr::drop_na()
+god_modified
+```
+
+```{r}
+visdat::vis_dat(god_modified, sort_type = TRUE, palette = "default")
+```
+
+```{r}
+god_modified %>%
+  dplyr::count(gender, believe_in_god) %>%
+  tt()
+
+god_modified %>% 
+  dplyr::count(gender) %>% 
+  tt()
+```
+
+```{r}
+god_modified <- god %>%
+  dplyr::mutate(across(where(is.character), as.factor))
+glimpse(god_modified)
+```
+
+```{r}
+god_modified %>%
+  stats::setNames(c("Name", "Gender", "Believe_In_God"))
+
+god_modified %>%
+  DT::datatable(
+    style = "default",
+    caption = htmltools::tags$caption(
+      style = "caption-side: top; text-align: left; color: black; font-size: 100%;", "Believe in God Dataset (Clean)"
+    ),
+    options = list(pageLength = 10, autoWidth = TRUE)
+  ) %>%
+  DT::formatStyle(
+    columns = names(god_modified),
+    fontFamily = "Roboto Condensed",
+    fontSize = "12px",
+  )
+```
+
+## 4. *Data Dictionary*
+
+### *Qualitative Data*
+
+1.  name(fct): Name of the student
+2.  gender(fct): Gender of the student
+3.  believe_in_god(fct): If the student believes in God (Yes/No)
+
+# 5. *Graphs*
+
+## 1. Which gender is more likely to believe in God?
+
+```{r}
+vcd::structable(data = god_modified, believe_in_god ~ gender) %>% 
+  as.matrix() %>%  
+  addmargins()
+```
+
+```{r}
+vcd::structable(believe_in_god ~ gender, data = god_modified) %>%
+    vcd::mosaic(gp = shading_max,
+                main = "Which gender is more likely to believe in God?")
+```
+
+### Inferences
+
+Females are more likely to believe in God than males. 18/23 women believe in God, whereas only 8/18 men believe in God which is surprisingly less. 
+
+## 2. Are there more believers than non- believers in God?
+
+```{r}
+god_modified %>% 
+  gf_bar(~ believe_in_god, fill = ~ believe_in_god) %>% 
+  gf_labs( title = "Are there more believers than non- believers in God?",
+           x = "Do You Believe in God?",
+           y = "Count",
+           fill = "Legend: Do you believe in God?") %>% 
+  gf_refine(scale_fill_brewer(palette = "Set2", direction = -1))
+```
+
+### Inferences
+
+It is evident from the graph that students are more likely to believe in God. The ratio of students who believe vs do not believe in God is almost 2:1.
+
+## 3. Do belief patterns in God differ between males and females?
+
+```{r}
+god_modified %>% 
+  gf_bar(~ believe_in_god | gender, fill = ~gender) %>% 
+  gf_labs( title = "Do belief patterns in God differ between males and females?",
+           x = "Do You Believe in God?",
+           y = "Count",
+           fill = "Legend: Gender")
+```
+
+### Inferences
+
+As mentioned before, Females are more likely to believe in God than males. The ratio of female believers to non- believers is almost 3.5:1, while for men it is even less than 2:1.
+
+## 6. *Summary of Inferences*
+
+More students believe in God than not, with roughly a 2:1 ratio overall. However, this belief is noticeably stronger among women- around 18 out of 23 females believe in God, compared to only 8 out of 18 males. Female students show a much higher believer-to-non-believer ratio (about 3.5:1), while for males it is under 2:1. Overall, belief in God is more common, and significantly more prevalent among women than men.
+
+## 7. *Surprising Aspects*
+
+It is surprising how so many men do not believe in God. When we look at the graph of believers vs non-believers, there are clearly more believers, but 18 of them are women and only 8 of them are men.
+
+## 8. *Binom test- Inference test for a single proportion*
+
+Null hypothesis: 50% of the students believe in God. Alternative hypothesis: The proportion of students who believe in God is either less than or more than 50%.
+
+```{r}
+mosaic::binom.test(~ believe_in_god, data = god_modified, success = "Yes")
+```
+
+```{r}
+mosaic::binom.test(~ believe_in_god, data = god_modified, success = "Yes") %>%
+  broom::tidy()
+```
+
+From the binomial test, we can conclude that the estimate value for this sample = 0.6341463, and that based on this, the population proportion of those who find tattoos attractive is also not 0.5, since the p-value is 0.1172752. So we reject the NULL hypothesis and accept the alternative hypothesis, that the proportion is not 0.5 and more like 0.6341463

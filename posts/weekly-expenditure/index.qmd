@@ -154,8 +154,7 @@ money_modified2 %>%
 
 While we surveyed people and told them our objective, a lot of them assumed that women would have a higher weekly expenditure. But clearly, from the data we can tell that men have a much higher average weekly expenditure than women.
 
-One of the men we surveyed mentioned that he bought an electronic device the previous week, which is why his expenditure was so high (50,000).
-Perhaps if we had surveyed different men, the data would be comparable.
+One of the men we surveyed mentioned that he bought an electronic device the previous week, which is why his expenditure was so high (50,000). Perhaps if we had surveyed different men, the data would be comparable.
 
 ## 2. What does the distribution of weekly expenditures look like for different genders?
 
@@ -227,4 +226,4 @@ money_ttest <- mosaic::t_test(
 money_ttest
 ```
 
-Since the p-value = 0.0009184396 is much smaller than 0.05, we reject the null hypothesis. The 95% confidence interval ([2108.431, 7558.314]) does not include 0. Thus, we can conclude that the average expenditure is significantly greater than 0.
+Since the p-value = 0.0009184396 is much smaller than 0.05, we reject the null hypothesis. The 95% confidence interval (\[2108.431, 7558.314\]) does not include 0. Thus, we can conclude that the average expenditure is significantly greater than 0.

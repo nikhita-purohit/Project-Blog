@@ -135,7 +135,7 @@ vcd::structable(believe_in_god ~ gender, data = god_modified) %>%
 
 ### Inferences
 
-Females are more likely to believe in God than males. 18/23 women believe in God, whereas only 8/18 men believe in God which is surprisingly less. 
+Females are more likely to believe in God than males. 18/23 women believe in God, whereas only 8/18 men believe in God which is surprisingly less.
 
 ## 2. Are there more believers than non- believers in God?
 

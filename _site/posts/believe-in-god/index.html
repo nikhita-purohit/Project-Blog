@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Nikhita Purohit">
-<meta name="dcterms.date" content="2025-10-29">
+<meta name="dcterms.date" content="2025-11-04">
 
 <title>Believe in God – Project Blog</title>
 <style>
@@ -102,6 +102,26 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-label": "Search"
   }
 }</script>
+<link href="../../site_libs/htmltools-fill-0.5.8.1/fill.css" rel="stylesheet">
+
+<script src="../../site_libs/htmlwidgets-1.6.4/htmlwidgets.js"></script>
+
+<link href="../../site_libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet">
+
+<script src="../../site_libs/datatables-binding-0.34.0/datatables.js"></script>
+
+<script src="../../site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+
+<link href="../../site_libs/dt-core-1.13.6/css/jquery.dataTables.min.css" rel="stylesheet">
+
+<link href="../../site_libs/dt-core-1.13.6/css/jquery.dataTables.extra.css" rel="stylesheet">
+
+<script src="../../site_libs/dt-core-1.13.6/js/jquery.dataTables.min.js"></script>
+
+<link href="../../site_libs/crosstalk-1.2.2/css/crosstalk.min.css" rel="stylesheet">
+
+<script src="../../site_libs/crosstalk-1.2.2/js/crosstalk.min.js"></script>
+
 
 
 <link rel="stylesheet" href="../../styles.css">
@@ -169,7 +189,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">October 29, 2025</p>
+        <p class="date">November 4, 2025</p>
       </div>
     </div>
     
@@ -194,7 +214,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="do-you-believe-in-god" class="level1">
 <h1>Do You Believe in God?</h1>
 <p>Studying Belief Patterns</p>
-<p>EXPERIMENT OBJECTIVE:</p>
+<p>EXPERIMENT OBJECTIVE: To explore whether students tend to believe in God.</p>
 <section id="setting-up-r-packages" class="level2">
 <h2 class="anchored" data-anchor-id="setting-up-r-packages"><em>1. Setting up R Packages</em></h2>
 <div class="cell">
@@ -523,8 +543,8 @@ $ believe_in_god &lt;chr&gt; "Yes", "Yes", "Yes", "Yes", "No", "Yes", "Yes", "No
 
     <script>
 
-      function styleCell_pzfx1f966wnbm7ln4orh(i, j, css_id) {
-          var table = document.getElementById("tinytable_pzfx1f966wnbm7ln4orh");
+      function styleCell_6auonx2n08v2mjskatfa(i, j, css_id) {
+          var table = document.getElementById("tinytable_6auonx2n08v2mjskatfa");
           var cell = table.querySelector(`[data-row="${i}"][data-col="${j}"]`);
           if (cell) {
               console.log(`Styling cell at (${i}, ${j}) with class ${css_id}`);
@@ -533,8 +553,8 @@ $ believe_in_god &lt;chr&gt; "Yes", "Yes", "Yes", "Yes", "No", "Yes", "Yes", "No
               console.warn(`Cell at (${i}, ${j}) not found.`);
           }
       }
-      function spanCell_pzfx1f966wnbm7ln4orh(i, j, rowspan, colspan) {
-        var table = document.getElementById("tinytable_pzfx1f966wnbm7ln4orh");
+      function spanCell_6auonx2n08v2mjskatfa(i, j, rowspan, colspan) {
+        var table = document.getElementById("tinytable_6auonx2n08v2mjskatfa");
         const targetCell = table.querySelector(`[data-row="${i}"][data-col="${j}"]`);
         if (!targetCell) {
           console.warn(`Cell at (${i}, ${j}) not found.`);
@@ -565,14 +585,14 @@ $ believe_in_god &lt;chr&gt; "Yes", "Yes", "Yes", "Yes", "No", "Yes", "Yes", "No
       window.addEventListener('load', function () {
           var cellsToStyle = [
             // tinytable style arrays after
-          { positions: [ { i: '4', j: 0 }, { i: '4', j: 1 }, { i: '4', j: 2 },  ], css_id: 'tinytable_css_9x4fw41hypinnb7ltzux',}, 
-          { positions: [ { i: '0', j: 0 }, { i: '0', j: 1 }, { i: '0', j: 2 },  ], css_id: 'tinytable_css_san4v0qx2yvw2f2sa1si',}, 
+          { positions: [ { i: '4', j: 0 }, { i: '4', j: 1 }, { i: '4', j: 2 },  ], css_id: 'tinytable_css_96kregbheh7nt9j7djw1',}, 
+          { positions: [ { i: '0', j: 0 }, { i: '0', j: 1 }, { i: '0', j: 2 },  ], css_id: 'tinytable_css_fqgj4dvdmjqkno9d5nvz',}, 
           ];
 
           // Loop over the arrays to style the cells
           cellsToStyle.forEach(function (group) {
               group.positions.forEach(function (cell) {
-                  styleCell_pzfx1f966wnbm7ln4orh(cell.i, cell.j, group.css_id);
+                  styleCell_6auonx2n08v2mjskatfa(cell.i, cell.j, group.css_id);
               });
           });
       });
@@ -580,11 +600,11 @@ $ believe_in_god &lt;chr&gt; "Yes", "Yes", "Yes", "Yes", "No", "Yes", "Yes", "No
 
     <style>
       /* tinytable css entries after */
-      .table td.tinytable_css_9x4fw41hypinnb7ltzux, .table th.tinytable_css_9x4fw41hypinnb7ltzux { border-bottom: solid #d3d8dc 0.1em; }
-      .table td.tinytable_css_san4v0qx2yvw2f2sa1si, .table th.tinytable_css_san4v0qx2yvw2f2sa1si { border-top: solid #d3d8dc 0.1em; border-bottom: solid #d3d8dc 0.05em; }
+      .table td.tinytable_css_96kregbheh7nt9j7djw1, .table th.tinytable_css_96kregbheh7nt9j7djw1 { border-bottom: solid #d3d8dc 0.1em; }
+      .table td.tinytable_css_fqgj4dvdmjqkno9d5nvz, .table th.tinytable_css_fqgj4dvdmjqkno9d5nvz { border-top: solid #d3d8dc 0.1em; border-bottom: solid #d3d8dc 0.05em; }
     </style>
     <div class="container">
-      <table class="table table-borderless" id="tinytable_pzfx1f966wnbm7ln4orh" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
+      <table class="table table-borderless" id="tinytable_6auonx2n08v2mjskatfa" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
         <thead>
         
               <tr>
@@ -628,8 +648,8 @@ $ believe_in_god &lt;chr&gt; "Yes", "Yes", "Yes", "Yes", "No", "Yes", "Yes", "No
 
     <script>
 
-      function styleCell_umvnst2xss15qeft5ilk(i, j, css_id) {
-          var table = document.getElementById("tinytable_umvnst2xss15qeft5ilk");
+      function styleCell_z191j4idchcwzaens8je(i, j, css_id) {
+          var table = document.getElementById("tinytable_z191j4idchcwzaens8je");
           var cell = table.querySelector(`[data-row="${i}"][data-col="${j}"]`);
           if (cell) {
               console.log(`Styling cell at (${i}, ${j}) with class ${css_id}`);
@@ -638,8 +658,8 @@ $ believe_in_god &lt;chr&gt; "Yes", "Yes", "Yes", "Yes", "No", "Yes", "Yes", "No
               console.warn(`Cell at (${i}, ${j}) not found.`);
           }
       }
-      function spanCell_umvnst2xss15qeft5ilk(i, j, rowspan, colspan) {
-        var table = document.getElementById("tinytable_umvnst2xss15qeft5ilk");
+      function spanCell_z191j4idchcwzaens8je(i, j, rowspan, colspan) {
+        var table = document.getElementById("tinytable_z191j4idchcwzaens8je");
         const targetCell = table.querySelector(`[data-row="${i}"][data-col="${j}"]`);
         if (!targetCell) {
           console.warn(`Cell at (${i}, ${j}) not found.`);
@@ -670,14 +690,14 @@ $ believe_in_god &lt;chr&gt; "Yes", "Yes", "Yes", "Yes", "No", "Yes", "Yes", "No
       window.addEventListener('load', function () {
           var cellsToStyle = [
             // tinytable style arrays after
-          { positions: [ { i: '2', j: 0 }, { i: '2', j: 1 },  ], css_id: 'tinytable_css_5kq3vqkbq2q5tjprpi1b',}, 
-          { positions: [ { i: '0', j: 0 }, { i: '0', j: 1 },  ], css_id: 'tinytable_css_755ezsgzy5n93rfm1ywx',}, 
+          { positions: [ { i: '2', j: 0 }, { i: '2', j: 1 },  ], css_id: 'tinytable_css_gy7ua47fu1n0c515leuz',}, 
+          { positions: [ { i: '0', j: 0 }, { i: '0', j: 1 },  ], css_id: 'tinytable_css_hj0jr5nwdvrbohj6eg3b',}, 
           ];
 
           // Loop over the arrays to style the cells
           cellsToStyle.forEach(function (group) {
               group.positions.forEach(function (cell) {
-                  styleCell_umvnst2xss15qeft5ilk(cell.i, cell.j, group.css_id);
+                  styleCell_z191j4idchcwzaens8je(cell.i, cell.j, group.css_id);
               });
           });
       });
@@ -685,11 +705,11 @@ $ believe_in_god &lt;chr&gt; "Yes", "Yes", "Yes", "Yes", "No", "Yes", "Yes", "No
 
     <style>
       /* tinytable css entries after */
-      .table td.tinytable_css_5kq3vqkbq2q5tjprpi1b, .table th.tinytable_css_5kq3vqkbq2q5tjprpi1b { border-bottom: solid #d3d8dc 0.1em; }
-      .table td.tinytable_css_755ezsgzy5n93rfm1ywx, .table th.tinytable_css_755ezsgzy5n93rfm1ywx { border-top: solid #d3d8dc 0.1em; border-bottom: solid #d3d8dc 0.05em; }
+      .table td.tinytable_css_gy7ua47fu1n0c515leuz, .table th.tinytable_css_gy7ua47fu1n0c515leuz { border-bottom: solid #d3d8dc 0.1em; }
+      .table td.tinytable_css_hj0jr5nwdvrbohj6eg3b, .table th.tinytable_css_hj0jr5nwdvrbohj6eg3b { border-top: solid #d3d8dc 0.1em; border-bottom: solid #d3d8dc 0.05em; }
     </style>
     <div class="container">
-      <table class="table table-borderless" id="tinytable_umvnst2xss15qeft5ilk" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
+      <table class="table table-borderless" id="tinytable_z191j4idchcwzaens8je" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
         <thead>
         
               <tr>
@@ -727,325 +747,39 @@ $ believe_in_god &lt;fct&gt; Yes, Yes, Yes, Yes, No, Yes, Yes, No, Yes, No, NA, 
 </div>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>god_modified <span class="sc">%&gt;%</span></span>
-<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>  tinytable<span class="sc">::</span><span class="fu">tt</span>(<span class="at">caption =</span> <span class="st">"Do You Believe in God? (Clean)"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>  tinytable<span class="sc">::</span><span class="fu">theme_html</span>(<span class="at">class =</span> <span class="st">"table table-hover table-striped table-condensed"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>  stats<span class="sc">::</span><span class="fu">setNames</span>(<span class="fu">c</span>(<span class="st">"Name"</span>, <span class="st">"Gender"</span>, <span class="st">"Believe_In_God"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>  stats<span class="sc">::</span><span class="fu">setNames</span>(<span class="fu">c</span>(<span class="st">"Name"</span>, <span class="st">"Gender"</span>, <span class="st">"Believe_In_God"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 47 × 3
+   Name      Gender Believe_In_God
+   &lt;fct&gt;     &lt;fct&gt;  &lt;fct&gt;         
+ 1 Sanjana   Female Yes           
+ 2 Tathasthu Male   Yes           
+ 3 Vaibhav   Male   Yes           
+ 4 Siddharth Male   Yes           
+ 5 Ashik     Male   No            
+ 6 Kshirab   Female Yes           
+ 7 Niyosha   Female Yes           
+ 8 Charvi    Female No            
+ 9 Anoti     Female Yes           
+10 Dhruv     Male   No            
+# ℹ 37 more rows</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>god_modified <span class="sc">%&gt;%</span></span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>  DT<span class="sc">::</span><span class="fu">datatable</span>(</span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">style =</span> <span class="st">"default"</span>,</span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption =</span> htmltools<span class="sc">::</span>tags<span class="sc">$</span><span class="fu">caption</span>(</span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a>      <span class="at">style =</span> <span class="st">"caption-side: top; text-align: left; color: black; font-size: 100%;"</span>, <span class="st">"Believe in God Dataset (Clean)"</span></span>
+<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb38-7"><a href="#cb38-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">options =</span> <span class="fu">list</span>(<span class="at">pageLength =</span> <span class="dv">10</span>, <span class="at">autoWidth =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb38-8"><a href="#cb38-8" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb38-9"><a href="#cb38-9" aria-hidden="true" tabindex="-1"></a>  DT<span class="sc">::</span><span class="fu">formatStyle</span>(</span>
+<span id="cb38-10"><a href="#cb38-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">columns =</span> <span class="fu">names</span>(god_modified),</span>
+<span id="cb38-11"><a href="#cb38-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">fontFamily =</span> <span class="st">"Roboto Condensed"</span>,</span>
+<span id="cb38-12"><a href="#cb38-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">fontSize =</span> <span class="st">"12px"</span>,</span>
+<span id="cb38-13"><a href="#cb38-13" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<!-- preamble start -->
-
-    <script>
-
-      function styleCell_c9foxve6zfaz15bd3on0(i, j, css_id) {
-          var table = document.getElementById("tinytable_c9foxve6zfaz15bd3on0");
-          var cell = table.querySelector(`[data-row="${i}"][data-col="${j}"]`);
-          if (cell) {
-              console.log(`Styling cell at (${i}, ${j}) with class ${css_id}`);
-              cell.classList.add(css_id);
-          } else {
-              console.warn(`Cell at (${i}, ${j}) not found.`);
-          }
-      }
-      function spanCell_c9foxve6zfaz15bd3on0(i, j, rowspan, colspan) {
-        var table = document.getElementById("tinytable_c9foxve6zfaz15bd3on0");
-        const targetCell = table.querySelector(`[data-row="${i}"][data-col="${j}"]`);
-        if (!targetCell) {
-          console.warn(`Cell at (${i}, ${j}) not found.`);
-        }
-
-        // Get all cells that need to be removed
-        const cellsToRemove = [];
-        for (let r = 0; r < rowspan; r++) {
-          for (let c = 0; c < colspan; c++) {
-            if (r === 0 && c === 0) continue; // Skip the target cell
-            const cell = table.querySelector(`[data-row="${i + r}"][data-col="${j + c}"]`);
-            if (cell) {
-              cellsToRemove.push(cell);
-            }
-          }
-        }
-
-        // Remove all cells
-        cellsToRemove.forEach(cell => cell.remove());
-
-        // Set rowspan and colspan of the target cell if it exists
-        if (targetCell) {
-          targetCell.rowSpan = rowspan;
-          targetCell.colSpan = colspan;
-        }
-      }
-      // tinytable span after
-      window.addEventListener('load', function () {
-          var cellsToStyle = [
-            // tinytable style arrays after
-          { positions: [ { i: '47', j: 0 }, { i: '47', j: 1 }, { i: '47', j: 2 },  ], css_id: 'tinytable_css_lha3fia1qjvm641fns14',}, 
-          { positions: [ { i: '0', j: 0 }, { i: '0', j: 1 }, { i: '0', j: 2 },  ], css_id: 'tinytable_css_0clrcl9fnfvraifvs7yf',}, 
-          ];
-
-          // Loop over the arrays to style the cells
-          cellsToStyle.forEach(function (group) {
-              group.positions.forEach(function (cell) {
-                  styleCell_c9foxve6zfaz15bd3on0(cell.i, cell.j, group.css_id);
-              });
-          });
-      });
-    </script>
-
-    <style>
-      /* tinytable css entries after */
-      .table td.tinytable_css_lha3fia1qjvm641fns14, .table th.tinytable_css_lha3fia1qjvm641fns14 { border-bottom: solid #d3d8dc 0.1em; }
-      .table td.tinytable_css_0clrcl9fnfvraifvs7yf, .table th.tinytable_css_0clrcl9fnfvraifvs7yf { border-top: solid #d3d8dc 0.1em; border-bottom: solid #d3d8dc 0.05em; }
-    </style>
-    <div class="container">
-      <table class="table table-hover table-striped table-condensed" id="tinytable_c9foxve6zfaz15bd3on0" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
-        <thead>
-        </thead><caption>Do You Believe in God? (Clean)</caption>
-              <tbody><tr>
-                <th scope="col" data-row="0" data-col="0">Name</th>
-                <th scope="col" data-row="0" data-col="1">Gender</th>
-                <th scope="col" data-row="0" data-col="2">Believe_In_God</th>
-              </tr>
-        
-        
-        </tbody><tbody>
-                <tr>
-                  <td data-row="1" data-col="0">Sanjana</td>
-                  <td data-row="1" data-col="1">Female</td>
-                  <td data-row="1" data-col="2">Yes</td>
-                </tr>
-                <tr>
-                  <td data-row="2" data-col="0">Tathasthu</td>
-                  <td data-row="2" data-col="1">Male</td>
-                  <td data-row="2" data-col="2">Yes</td>
-                </tr>
-                <tr>
-                  <td data-row="3" data-col="0">Vaibhav</td>
-                  <td data-row="3" data-col="1">Male</td>
-                  <td data-row="3" data-col="2">Yes</td>
-                </tr>
-                <tr>
-                  <td data-row="4" data-col="0">Siddharth</td>
-                  <td data-row="4" data-col="1">Male</td>
-                  <td data-row="4" data-col="2">Yes</td>
-                </tr>
-                <tr>
-                  <td data-row="5" data-col="0">Ashik</td>
-                  <td data-row="5" data-col="1">Male</td>
-                  <td data-row="5" data-col="2">No</td>
-                </tr>
-                <tr>
-                  <td data-row="6" data-col="0">Kshirab</td>
-                  <td data-row="6" data-col="1">Female</td>
-                  <td data-row="6" data-col="2">Yes</td>
-                </tr>
-                <tr>
-                  <td data-row="7" data-col="0">Niyosha</td>
-                  <td data-row="7" data-col="1">Female</td>
-                  <td data-row="7" data-col="2">Yes</td>
-                </tr>
-                <tr>
-                  <td data-row="8" data-col="0">Charvi</td>
-                  <td data-row="8" data-col="1">Female</td>
-                  <td data-row="8" data-col="2">No</td>
-                </tr>
-                <tr>
-                  <td data-row="9" data-col="0">Anoti</td>
-                  <td data-row="9" data-col="1">Female</td>
-                  <td data-row="9" data-col="2">Yes</td>
-                </tr>
-                <tr>
-                  <td data-row="10" data-col="0">Dhruv</td>
-                  <td data-row="10" data-col="1">Male</td>
-                  <td data-row="10" data-col="2">No</td>
-                </tr>
-                <tr>
-                  <td data-row="11" data-col="0">Zuli</td>
-                  <td data-row="11" data-col="1">Female</td>
-                  <td data-row="11" data-col="2">NA</td>
-                </tr>
-                <tr>
-                  <td data-row="12" data-col="0">Maanya</td>
-                  <td data-row="12" data-col="1">Female</td>
-                  <td data-row="12" data-col="2">No</td>
-                </tr>
-                <tr>
-                  <td data-row="13" data-col="0">Aaksha</td>
-                  <td data-row="13" data-col="1">Female</td>
-                  <td data-row="13" data-col="2">Yes</td>
-                </tr>
-                <tr>
-                  <td data-row="14" data-col="0">Adhil</td>
-                  <td data-row="14" data-col="1">Male</td>
-                  <td data-row="14" data-col="2">No</td>
-                </tr>
-                <tr>
-                  <td data-row="15" data-col="0">Aaron</td>
-                  <td data-row="15" data-col="1">Male</td>
-                  <td data-row="15" data-col="2">NA</td>
-                </tr>
-                <tr>
-                  <td data-row="16" data-col="0">Zaina</td>
-                  <td data-row="16" data-col="1">Female</td>
-                  <td data-row="16" data-col="2">NA</td>
-                </tr>
-                <tr>
-                  <td data-row="17" data-col="0">Aradhya</td>
-                  <td data-row="17" data-col="1">Male</td>
-                  <td data-row="17" data-col="2">Yes</td>
-                </tr>
-                <tr>
-                  <td data-row="18" data-col="0">Prathana</td>
-                  <td data-row="18" data-col="1">Female</td>
-                  <td data-row="18" data-col="2">Yes</td>
-                </tr>
-                <tr>
-                  <td data-row="19" data-col="0">Ashmita</td>
-                  <td data-row="19" data-col="1">Female</td>
-                  <td data-row="19" data-col="2">Yes</td>
-                </tr>
-                <tr>
-                  <td data-row="20" data-col="0">Ishita</td>
-                  <td data-row="20" data-col="1">Female</td>
-                  <td data-row="20" data-col="2">No</td>
-                </tr>
-                <tr>
-                  <td data-row="21" data-col="0">Rishi</td>
-                  <td data-row="21" data-col="1">Male</td>
-                  <td data-row="21" data-col="2">No</td>
-                </tr>
-                <tr>
-                  <td data-row="22" data-col="0">Arnav Kodhandapani  Anupama Srikanth</td>
-                  <td data-row="22" data-col="1">Male</td>
-                  <td data-row="22" data-col="2">No</td>
-                </tr>
-                <tr>
-                  <td data-row="23" data-col="0">Nitish</td>
-                  <td data-row="23" data-col="1">Male</td>
-                  <td data-row="23" data-col="2">Yes</td>
-                </tr>
-                <tr>
-                  <td data-row="24" data-col="0">Avanilka</td>
-                  <td data-row="24" data-col="1">Female</td>
-                  <td data-row="24" data-col="2">Yes</td>
-                </tr>
-                <tr>
-                  <td data-row="25" data-col="0">Lakshita</td>
-                  <td data-row="25" data-col="1">Female</td>
-                  <td data-row="25" data-col="2">Yes</td>
-                </tr>
-                <tr>
-                  <td data-row="26" data-col="0">Nandana</td>
-                  <td data-row="26" data-col="1">Female</td>
-                  <td data-row="26" data-col="2">Yes</td>
-                </tr>
-                <tr>
-                  <td data-row="27" data-col="0">Mridula</td>
-                  <td data-row="27" data-col="1">Female</td>
-                  <td data-row="27" data-col="2">Yes</td>
-                </tr>
-                <tr>
-                  <td data-row="28" data-col="0">Shiva</td>
-                  <td data-row="28" data-col="1">Male</td>
-                  <td data-row="28" data-col="2">No</td>
-                </tr>
-                <tr>
-                  <td data-row="29" data-col="0">Diya</td>
-                  <td data-row="29" data-col="1">Female</td>
-                  <td data-row="29" data-col="2">Yes</td>
-                </tr>
-                <tr>
-                  <td data-row="30" data-col="0">Kanishk</td>
-                  <td data-row="30" data-col="1">Male</td>
-                  <td data-row="30" data-col="2">No</td>
-                </tr>
-                <tr>
-                  <td data-row="31" data-col="0">Samaraj</td>
-                  <td data-row="31" data-col="1">Male</td>
-                  <td data-row="31" data-col="2">Yes</td>
-                </tr>
-                <tr>
-                  <td data-row="32" data-col="0">Nipun</td>
-                  <td data-row="32" data-col="1">Male</td>
-                  <td data-row="32" data-col="2">Yes</td>
-                </tr>
-                <tr>
-                  <td data-row="33" data-col="0">Vasudhara</td>
-                  <td data-row="33" data-col="1">Female</td>
-                  <td data-row="33" data-col="2">No</td>
-                </tr>
-                <tr>
-                  <td data-row="34" data-col="0">Vishal</td>
-                  <td data-row="34" data-col="1">Male</td>
-                  <td data-row="34" data-col="2">NA</td>
-                </tr>
-                <tr>
-                  <td data-row="35" data-col="0">Niranjan</td>
-                  <td data-row="35" data-col="1">Male</td>
-                  <td data-row="35" data-col="2">NA</td>
-                </tr>
-                <tr>
-                  <td data-row="36" data-col="0">Aditya</td>
-                  <td data-row="36" data-col="1">Male</td>
-                  <td data-row="36" data-col="2">No</td>
-                </tr>
-                <tr>
-                  <td data-row="37" data-col="0">Pranathi</td>
-                  <td data-row="37" data-col="1">Female</td>
-                  <td data-row="37" data-col="2">NA</td>
-                </tr>
-                <tr>
-                  <td data-row="38" data-col="0">Risha</td>
-                  <td data-row="38" data-col="1">Female</td>
-                  <td data-row="38" data-col="2">Yes</td>
-                </tr>
-                <tr>
-                  <td data-row="39" data-col="0">Jashith</td>
-                  <td data-row="39" data-col="1">Male</td>
-                  <td data-row="39" data-col="2">No</td>
-                </tr>
-                <tr>
-                  <td data-row="40" data-col="0">Swetha</td>
-                  <td data-row="40" data-col="1">Female</td>
-                  <td data-row="40" data-col="2">Yes</td>
-                </tr>
-                <tr>
-                  <td data-row="41" data-col="0">Rishi</td>
-                  <td data-row="41" data-col="1">Male</td>
-                  <td data-row="41" data-col="2">Yes</td>
-                </tr>
-                <tr>
-                  <td data-row="42" data-col="0">Manal</td>
-                  <td data-row="42" data-col="1">Female</td>
-                  <td data-row="42" data-col="2">Yes</td>
-                </tr>
-                <tr>
-                  <td data-row="43" data-col="0">Shruthi</td>
-                  <td data-row="43" data-col="1">Female</td>
-                  <td data-row="43" data-col="2">Yes</td>
-                </tr>
-                <tr>
-                  <td data-row="44" data-col="0">Aditya</td>
-                  <td data-row="44" data-col="1">Male</td>
-                  <td data-row="44" data-col="2">No</td>
-                </tr>
-                <tr>
-                  <td data-row="45" data-col="0">Ashmita</td>
-                  <td data-row="45" data-col="1">Female</td>
-                  <td data-row="45" data-col="2">No</td>
-                </tr>
-                <tr>
-                  <td data-row="46" data-col="0">Krithika</td>
-                  <td data-row="46" data-col="1">Female</td>
-                  <td data-row="46" data-col="2">Yes</td>
-                </tr>
-                <tr>
-                  <td data-row="47" data-col="0">Diya</td>
-                  <td data-row="47" data-col="1">Female</td>
-                  <td data-row="47" data-col="2">Yes</td>
-                </tr>
-        </tbody>
-      </table>
-    </div>
-<!-- hack to avoid NA insertion in last line -->
+<div class="datatables html-widget html-fill-item" id="htmlwidget-714fd150c583c2d4a969" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-714fd150c583c2d4a969">{"x":{"filter":"none","vertical":false,"caption":"<caption style=\"caption-side: top; text-align: left; color: black; font-size: 100%;\">Believe in God Dataset (Clean)<\/caption>","data":[["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36","37","38","39","40","41","42","43","44","45","46","47"],["Sanjana","Tathasthu","Vaibhav","Siddharth","Ashik","Kshirab","Niyosha","Charvi","Anoti","Dhruv","Zuli","Maanya","Aaksha","Adhil","Aaron","Zaina","Aradhya","Prathana","Ashmita","Ishita","Rishi","Arnav Kodhandapani  Anupama Srikanth","Nitish","Avanilka","Lakshita","Nandana","Mridula","Shiva","Diya","Kanishk","Samaraj","Nipun","Vasudhara","Vishal","Niranjan","Aditya","Pranathi","Risha","Jashith","Swetha","Rishi","Manal","Shruthi","Aditya","Ashmita","Krithika","Diya"],["Female","Male","Male","Male","Male","Female","Female","Female","Female","Male","Female","Female","Female","Male","Male","Female","Male","Female","Female","Female","Male","Male","Male","Female","Female","Female","Female","Male","Female","Male","Male","Male","Female","Male","Male","Male","Female","Female","Male","Female","Male","Female","Female","Male","Female","Female","Female"],["Yes","Yes","Yes","Yes","No","Yes","Yes","No","Yes","No",null,"No","Yes","No",null,null,"Yes","Yes","Yes","No","No","No","Yes","Yes","Yes","Yes","Yes","No","Yes","No","Yes","Yes","No",null,null,"No",null,"Yes","No","Yes","Yes","Yes","Yes","No","No","Yes","Yes"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>name<\/th>\n      <th>gender<\/th>\n      <th>believe_in_god<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":10,"autoWidth":true,"columnDefs":[{"orderable":false,"targets":0},{"name":" ","targets":0},{"name":"name","targets":1},{"name":"gender","targets":2},{"name":"believe_in_god","targets":3}],"order":[],"orderClasses":false,"rowCallback":"function(row, data, displayNum, displayIndex, dataIndex) {\nvar value=data[1]; $(this.api().cell(row, 1).node()).css({'font-family':'Roboto Condensed','font-size':'12px'});\nvar value=data[2]; $(this.api().cell(row, 2).node()).css({'font-family':'Roboto Condensed','font-size':'12px'});\nvar value=data[3]; $(this.api().cell(row, 3).node()).css({'font-family':'Roboto Condensed','font-size':'12px'});\n}"}},"evals":["options.rowCallback"],"jsHooks":[]}</script>
 </div>
 </div>
 </section>
@@ -1063,12 +797,12 @@ $ believe_in_god &lt;fct&gt; Yes, Yes, Yes, Yes, No, Yes, Yes, No, Yes, No, NA, 
 </section>
 <section id="graphs" class="level1">
 <h1>5. <em>Graphs</em></h1>
-<section id="section-1" class="level2">
-<h2 class="anchored" data-anchor-id="section-1">1.</h2>
+<section id="which-gender-is-more-likely-to-believe-in-god" class="level2">
+<h2 class="anchored" data-anchor-id="which-gender-is-more-likely-to-believe-in-god">1. Which gender is more likely to believe in God?</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>vcd<span class="sc">::</span><span class="fu">structable</span>(<span class="at">data =</span> god_modified, believe_in_god <span class="sc">~</span> gender) <span class="sc">%&gt;%</span> </span>
-<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as.matrix</span>() <span class="sc">%&gt;%</span>  </span>
-<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">addmargins</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>vcd<span class="sc">::</span><span class="fu">structable</span>(<span class="at">data =</span> god_modified, believe_in_god <span class="sc">~</span> gender) <span class="sc">%&gt;%</span> </span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as.matrix</span>() <span class="sc">%&gt;%</span>  </span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">addmargins</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>        believe_in_god
 gender   No Yes Sum
@@ -1078,9 +812,9 @@ gender   No Yes Sum
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>vcd<span class="sc">::</span><span class="fu">structable</span>(believe_in_god <span class="sc">~</span> gender, <span class="at">data =</span> god_modified) <span class="sc">%&gt;%</span></span>
-<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>    vcd<span class="sc">::</span><span class="fu">mosaic</span>(<span class="at">gp =</span> shading_max,</span>
-<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>                <span class="at">main =</span> <span class="st">"Which gender is more likely to believe in God?"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>vcd<span class="sc">::</span><span class="fu">structable</span>(believe_in_god <span class="sc">~</span> gender, <span class="at">data =</span> god_modified) <span class="sc">%&gt;%</span></span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>    vcd<span class="sc">::</span><span class="fu">mosaic</span>(<span class="at">gp =</span> shading_max,</span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>                <span class="at">main =</span> <span class="st">"Which gender is more likely to believe in God?"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1089,14 +823,21 @@ gender   No Yes Sum
 </div>
 </div>
 </div>
+<section id="inferences" class="level3">
+<h3 class="anchored" data-anchor-id="inferences">Inferences</h3>
+<p>Females are more likely to believe in God than males. 18/23 women believe in God, whereas only 8/18 men believe in God which is surprisingly less.</p>
+</section>
+</section>
+<section id="are-there-more-believers-than-non--believers-in-god" class="level2">
+<h2 class="anchored" data-anchor-id="are-there-more-believers-than-non--believers-in-god">2. Are there more believers than non- believers in God?</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>god_modified <span class="sc">%&gt;%</span> </span>
-<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gf_bar</span>(<span class="sc">~</span> believe_in_god, <span class="at">fill =</span> <span class="sc">~</span> believe_in_god) <span class="sc">%&gt;%</span> </span>
-<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gf_labs</span>( <span class="at">title =</span> <span class="st">"Are there more believers than non- believers in God?"</span>,</span>
-<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a>           <span class="at">x =</span> <span class="st">"Do You Believe in God?"</span>,</span>
-<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a>           <span class="at">y =</span> <span class="st">"Count"</span>,</span>
-<span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a>           <span class="at">fill =</span> <span class="st">"Legend: Do you believe in God?"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb40-7"><a href="#cb40-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gf_refine</span>(<span class="fu">scale_fill_brewer</span>(<span class="at">palette =</span> <span class="st">"Set2"</span>, <span class="at">direction =</span> <span class="sc">-</span><span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>god_modified <span class="sc">%&gt;%</span> </span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gf_bar</span>(<span class="sc">~</span> believe_in_god, <span class="at">fill =</span> <span class="sc">~</span> believe_in_god) <span class="sc">%&gt;%</span> </span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gf_labs</span>( <span class="at">title =</span> <span class="st">"Are there more believers than non- believers in God?"</span>,</span>
+<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a>           <span class="at">x =</span> <span class="st">"Do You Believe in God?"</span>,</span>
+<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a>           <span class="at">y =</span> <span class="st">"Count"</span>,</span>
+<span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a>           <span class="at">fill =</span> <span class="st">"Legend: Do you believe in God?"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb42-7"><a href="#cb42-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gf_refine</span>(<span class="fu">scale_fill_brewer</span>(<span class="at">palette =</span> <span class="st">"Set2"</span>, <span class="at">direction =</span> <span class="sc">-</span><span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1105,13 +846,20 @@ gender   No Yes Sum
 </div>
 </div>
 </div>
+<section id="inferences-1" class="level3">
+<h3 class="anchored" data-anchor-id="inferences-1">Inferences</h3>
+<p>It is evident from the graph that students are more likely to believe in God. The ratio of students who believe vs do not believe in God is almost 2:1.</p>
+</section>
+</section>
+<section id="do-belief-patterns-in-god-differ-between-males-and-females" class="level2">
+<h2 class="anchored" data-anchor-id="do-belief-patterns-in-god-differ-between-males-and-females">3. Do belief patterns in God differ between males and females?</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>god_modified <span class="sc">%&gt;%</span> </span>
-<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gf_bar</span>(<span class="sc">~</span> believe_in_god <span class="sc">|</span> gender, <span class="at">fill =</span> <span class="sc">~</span>gender) <span class="sc">%&gt;%</span> </span>
-<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gf_labs</span>( <span class="at">title =</span> <span class="st">"Do belief patterns in God differ between males and females?"</span>,</span>
-<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a>           <span class="at">x =</span> <span class="st">"Do You Believe in God?"</span>,</span>
-<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a>           <span class="at">y =</span> <span class="st">"Count"</span>,</span>
-<span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a>           <span class="at">fill =</span> <span class="st">"Legend: Gender"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>god_modified <span class="sc">%&gt;%</span> </span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gf_bar</span>(<span class="sc">~</span> believe_in_god <span class="sc">|</span> gender, <span class="at">fill =</span> <span class="sc">~</span>gender) <span class="sc">%&gt;%</span> </span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gf_labs</span>( <span class="at">title =</span> <span class="st">"Do belief patterns in God differ between males and females?"</span>,</span>
+<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a>           <span class="at">x =</span> <span class="st">"Do You Believe in God?"</span>,</span>
+<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a>           <span class="at">y =</span> <span class="st">"Count"</span>,</span>
+<span id="cb43-6"><a href="#cb43-6" aria-hidden="true" tabindex="-1"></a>           <span class="at">fill =</span> <span class="st">"Legend: Gender"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1120,15 +868,24 @@ gender   No Yes Sum
 </div>
 </div>
 </div>
+<section id="inferences-2" class="level3">
+<h3 class="anchored" data-anchor-id="inferences-2">Inferences</h3>
+<p>As mentioned before, Females are more likely to believe in God than males. The ratio of female believers to non- believers is almost 3.5:1, while for men it is even less than 2:1.</p>
+</section>
 </section>
 <section id="summary-of-inferences" class="level2">
 <h2 class="anchored" data-anchor-id="summary-of-inferences">6. <em>Summary of Inferences</em></h2>
+<p>More students believe in God than not, with roughly a 2:1 ratio overall. However, this belief is noticeably stronger among women- around 18 out of 23 females believe in God, compared to only 8 out of 18 males. Female students show a much higher believer-to-non-believer ratio (about 3.5:1), while for males it is under 2:1. Overall, belief in God is more common, and significantly more prevalent among women than men.</p>
+</section>
+<section id="surprising-aspects" class="level2">
+<h2 class="anchored" data-anchor-id="surprising-aspects">7. <em>Surprising Aspects</em></h2>
+<p>It is surprising how so many men do not believe in God. When we look at the graph of believers vs non-believers, there are clearly more believers, but 18 of them are women and only 8 of them are men.</p>
 </section>
 <section id="binom-test--inference-test-for-a-single-proportion" class="level2">
-<h2 class="anchored" data-anchor-id="binom-test--inference-test-for-a-single-proportion">7. <em>Binom test- Inference test for a single proportion</em></h2>
+<h2 class="anchored" data-anchor-id="binom-test--inference-test-for-a-single-proportion">8. <em>Binom test- Inference test for a single proportion</em></h2>
 <p>Null hypothesis: 50% of the students believe in God. Alternative hypothesis: The proportion of students who believe in God is either less than or more than 50%.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>mosaic<span class="sc">::</span><span class="fu">binom.test</span>(<span class="sc">~</span> believe_in_god, <span class="at">data =</span> god_modified, <span class="at">success =</span> <span class="st">"Yes"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>mosaic<span class="sc">::</span><span class="fu">binom.test</span>(<span class="sc">~</span> believe_in_god, <span class="at">data =</span> god_modified, <span class="at">success =</span> <span class="st">"Yes"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 
@@ -1144,8 +901,8 @@ probability of success
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>mosaic<span class="sc">::</span><span class="fu">binom.test</span>(<span class="sc">~</span> believe_in_god, <span class="at">data =</span> god_modified, <span class="at">success =</span> <span class="st">"Yes"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>  broom<span class="sc">::</span><span class="fu">tidy</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>mosaic<span class="sc">::</span><span class="fu">binom.test</span>(<span class="sc">~</span> believe_in_god, <span class="at">data =</span> god_modified, <span class="at">success =</span> <span class="st">"Yes"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>  broom<span class="sc">::</span><span class="fu">tidy</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 7
   estimate statistic p.value parameter conf.low conf.high alternative

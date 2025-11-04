@@ -5,7 +5,9 @@ date: "2025-11-04"
 categories: [code]
 ---
 
-# ![](images/clipboard-2484901654.png)Is your dad weird?
+# ![](images/clipboard-2484901654.png)
+
+# Is your dad weird?
 
 Asking SMI and MIT Students If They Think Their Dad is Weird
 

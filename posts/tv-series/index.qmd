@@ -5,7 +5,7 @@ date: "2025-11-04"
 categories: [code]
 ---
 
-![](images/clipboard-2289129060.png)
+# ![](images/clipboard-2289129060.png)
 
 # Rating TV Series
 

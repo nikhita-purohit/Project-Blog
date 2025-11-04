@@ -9,7 +9,7 @@ categories: [code]
 
 # Is your dad weird?
 
-Asking SMI and MIT Students If They Think Their Dad is Weird
+Are SMI dads weirder than MIT dads?
 
 EXPERIMENT OBJECTIVE: To find out if SMI dads are weirder than MIT dads.
 
